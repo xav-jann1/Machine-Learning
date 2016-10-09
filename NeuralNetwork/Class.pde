@@ -4,16 +4,20 @@ class Neuron
   protected float[] weights;
   protected float output=0;
   
-  Neuron(int w){
-    weights = new float[w];
-    for(int i=0;i<weights.length;i++) weights[i] = 1/*random(-1,1)*/;
+  Neuron(int i){
+    weights = new float[i];
+    for(int j=0;j<weights.length;j++) weights[j] = 1 /*random(-1,1)*/;
   }
+  
+  Neuron(int[] w){  //Avec weights
+    weights = new float[w.length];
+    for(int j=0;j<weights.length;j++) weights[j] = w[j];
+  }
+  
   
   float output(float[] inputs){
     float sum=0;
-    for(int i=0;i<inputs.length;i++){
-      sum+=inputs[i]*weights[i];
-    }
+    for(int i=0;i<inputs.length;i++) sum+=inputs[i]*weights[i];
     
     //softmax ou sigmoid
     
@@ -35,6 +39,11 @@ class Layer
   Layer(int n, int i){  //Nombre de neurones et nombre d'input par neurone
     neurons = new Neuron[n];
     for(int neuron=0; neuron<n; neuron++) neurons[neuron] = new Neuron(i);
+  }
+  
+  Layer(int[][] n){  //Nombre de neurones, weights et nombre d'input par neurone
+    neurons = new Neuron[n.length];
+    for(int neuron=0; neuron<n.length; neuron++) neurons[neuron] = new Neuron(n[neuron]);
   }
   
   
@@ -91,6 +100,20 @@ class Network
     }
 
   }
+  
+  Network(int i, int[][][] l, int[][] o){  //Hidden Layers with weights - TODO : enlever l'entrée des outputs (l'intégrer dans l)
+    inputs = new float[i];
+    layers = new Layer[l.length+1];
+    
+    //Prepare layers :
+    for(int layer=0;layer<layers.length;layer++){
+      if(layer==0) layers[layer] = new Layer(l[layer]);  //1st Layer
+       else if(layer==layers.length-1) layers[layer] = new Layer(o);  //Outputs
+        else layers[layer] = new Layer(l[layer]);  //Hidden Layers   
+    }
+
+  }
+  
   
   
   /*void addNeuron(int n){
