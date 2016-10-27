@@ -55,8 +55,7 @@ float[][] mProduct(float[][] x, float[][] y){
   float[][] s = new float[x.length][x[0].length]; 
   for(int i=0; i<x.length; i++){
     for(int j=0;j<x[0].length;j++) s[i][j] = x[i][j] * y[i][j];
-  }
-   
+  }   
   return s;
 }
 

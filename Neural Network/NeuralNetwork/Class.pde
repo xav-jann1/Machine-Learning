@@ -1,13 +1,13 @@
 
 class Neuron
 {
-  protected float[] weights;
-  protected float sum=0;
-  protected float output=0;
+  float[] weights;
+  float sum=0;
+  float output=0;
   
   Neuron(int i){
     weights = new float[i];
-    for(int j=0;j<weights.length;j++) weights[j] = random(-1,1);
+    for(int j=0;j<weights.length;j++) weights[j] = random(-5,5);
   }
   
   Neuron(int[] w){  //Avec weights
@@ -16,35 +16,26 @@ class Neuron
   }
   
   
-  float output(float[] inputs){
+  float output(float[] inputs, ActivationFunction f){
     float sum=0;
     for(int i=0;i<inputs.length;i++) sum+=inputs[i]*weights[i];
     
     this.sum = sum;
     
     //softmax ou sigmoid
-    sum = sigmoid(sum);
+    sum = f.sum(sum);
     output = sum;
     
     return sum;
   }
   
-  float[] getWeights(){
-    return weights;
-  }
+  float[] getWeights(){ return weights; }
   
-  float getSum(){
-    return sum;
-  }
+  float getSum(){ return sum; }
   
-  float getAnswer(){
-    return output;
-  }
+  float getAnswer(){ return output; }
   
-  void newWeights(float[] w){
-     weights = w;  
-  }
-  
+  void newWeights(float[] w){ weights = w; }
   
 }
 
@@ -64,17 +55,21 @@ class Layer
   }
   
   
-  float[] forward(float[] input){
+  float[] forward(float[] input, ActivationFunction f){
     float[] outputs = new float[0];
     for(int neuron=0; neuron<neurons.length; neuron++){
-      outputs = append(outputs,neurons[neuron].output(input));
+      outputs = append(outputs,neurons[neuron].output(input, f));
     }
-    
     return outputs;
   }
   
-  int nNeurons(){
-    return neurons.length;
+  
+  int nNeurons(){ return neurons.length; }
+  
+  void newWeights(float[][] weights){
+    for(int neuron=0; neuron<neurons.length; neuron++){
+      neurons[neuron].newWeights(weights[neuron]);
+    }
   }
   
   float[][] getAllWeights(){
@@ -82,53 +77,43 @@ class Layer
     for(int neuron=0; neuron<neurons.length; neuron++) weights[neuron] = neurons[neuron].getWeights();
     return weights; 
   }
-   
-  float getAnswer(int n){
-    return neurons[n].getAnswer();
-  }
-  
+     
   float[] getAllSums(){
     float[] sums = new float[neurons.length];  
     for(int neuron=0; neuron<neurons.length; neuron++) sums[neuron] = neurons[neuron].getSum();
     return sums; 
   }
   
+  float getAnswer(int n){ return neurons[n].getAnswer(); }
+  
   float[] getAllAnswers(){
     float[] answers = new float[neurons.length];  
     for(int neuron=0; neuron<neurons.length; neuron++) answers[neuron] = neurons[neuron].getAnswer();
     return answers;
   }
-  
-  
-  
-  void newWeights(float[][] weights){
-    
-    for(int neuron=0; neuron<neurons.length; neuron++){
-      neurons[neuron].newWeights(weights[neuron]);
-    }
-    
-  }
-  
-  
+
 }
 
 
 class Network
 {
-  protected float[] inputs;
-  protected Layer[] layers;  //Hidden Layers + Outputs
+  float[] inputs;
+  Layer[] layers;  //Hidden Layers + Outputs
   
-  Network(int i, int l, int o){  //Hidden Layer
+  ActivationFunction f;
+  
+  Network(int i, int l, int o, String s){  //Hidden Layer
     inputs = new float[i];
     layers = new Layer[1+1];  //Hidden Layer + Outputs
     
     //Prepare layers:
     layers[0] = new Layer(l,i);
     layers[1] = new Layer(o,l);
-  
+    
+    f = new ActivationFunction(s);
   }
   
-  Network(int i, int[] l, int o){  //Hidden Layers
+  Network(int i, int[] l, int o, String s){  //Hidden Layers
     inputs = new float[i];
     layers = new Layer[l.length+1];
     
@@ -138,10 +123,12 @@ class Network
        else if(layer==layers.length-1) layers[layer] = new Layer(o,l[layer-1]);  //Outputs
         else layers[layer] = new Layer(l[layer],l[layer-1]);  //Hidden Layers   
     }
+    
+    f = new ActivationFunction(s);
 
   }
   
-  Network(int i, int[][][] l, int[][] o){  //Hidden Layers with weights - TODO : enlever l'entrée des outputs (l'intégrer dans l)
+  Network(int i, int[][][] l, int[][] o, String s){  //Hidden Layers with weights - TODO : enlever l'entrée des outputs (l'intégrer dans l)
     inputs = new float[i];
     layers = new Layer[l.length+1];
     
@@ -151,36 +138,30 @@ class Network
        else if(layer==layers.length-1) layers[layer] = new Layer(o);  //Outputs
         else layers[layer] = new Layer(l[layer]);  //Hidden Layers   
     }
-
+    
+    f = new ActivationFunction(s);
+    
   }
   
    
-  /*void addNeuron(int n){
-    neurons[n] = (Neuron[]) append(neurons[n], new Neuron(inputs.length));
-  }*/
-
+  /*void addNeuron(int n){ neurons[n] = (Neuron[]) append(neurons[n], new Neuron(inputs.length)); }*/
     
   float[] forward(float[] inputs){
     this.inputs = inputs;
     
     float[] layerValues = new float[0];
-    
     for(int layer=0; layer<layers.length; layer++){
-      if(layer==0) layerValues = layers[layer].forward(inputs);
-       else layerValues = layers[layer].forward(layerValues);
+      if(layer==0) layerValues = layers[layer].forward(inputs, f);
+       else layerValues = layers[layer].forward(layerValues, f);
     }
     
     return layerValues;
   }
   
   float cost(float[] inputs, float[] outputs){
-    
     float J =0 ;
-    
     float[] y = forward(inputs);
-    
     for(int i=0; i<outputs.length; i++) J += pow(outputs[i] - y[i], 2);
-    
     return J;
   }
   
@@ -188,8 +169,7 @@ class Network
   float[][][] getAllWeights(){  //Layer, Neuron, weights
     float[][][] weights = new float[layers.length][][];  
     for(int layer=0; layer<layers.length; layer++) weights[layer] = layers[layer].getAllWeights();
-    return weights;
-    
+    return weights;   
   }
   
   float[][] getAllSums(){
@@ -204,22 +184,15 @@ class Network
     return answers;
   }
   
-  void newWeights(float[][][] weights){
-    
+  float[] getSumsFromLayer(int layer){ return layers[layer].getAllSums(); }
+  
+  float[] getAnswersFromLayer(int layer){ return layers[layer].getAllAnswers(); }
+  
+  void newWeights(float[][][] weights){  
     for(int layer=0; layer<layers.length; layer++){
       layers[layer].newWeights(weights[layer]);
     }
-    
-  }
-  
-  /*
-  float[] getAnswersFromLayer(int layer){
-    if(layer==-1) layer = layers.length-1;
-     else layer-=1;
-    
-    return layers[layer].getAnswers(); 
-  }*/
-  
+  }  
   
   
   void display(float w, float h, int rC){  // float nécessaire pour éviter des 'faux écarts'
@@ -261,8 +234,7 @@ class Network
       }
       
     }
-    
-       
+   
   }
 
 }
@@ -270,7 +242,9 @@ class Network
 
 class Train
 {
-  Network network;
+  Network network;      //Réseau à entraîner
+  
+  ActivationFunction f;
   
   float[][] inputs;     //X : valeurs d'entrée pour chaque exemple
   float[][] outputs;    //Y : valeurs de sortie pour chaque exemple
@@ -286,40 +260,30 @@ class Train
     inputs = i;
     outputs = o;
     
+    f = network.f;
     weights = n.getAllWeights();
-    
-    //showArray(weights[0]);
   }
+  
   
   void train(){
     
     float[][][] dJdW = costFunctionPrime(); 
     
-    int scalar=10;
-    
+    float scalar=1000;
     for(int layer=0; layer<network.layers.length; layer++){
-      
-      //showArray(weights[layer]);
-      
       weights[layer] = mSub(weights[layer], mT(mProduct(dJdW[layer],scalar)) );
-      
-      //showArray(weights[layer]);
-      
-      //println();
     }
     
     network.newWeights(weights);
     
-    
   }
+  
   
   float cost(){
     float J=0;
-    
     for(int e=0; e<inputs.length; e++){
       J += network.cost(inputs[e],outputs[e]);
     }
-    
     return 0.5*J;
   }
   
@@ -333,35 +297,50 @@ class Train
     float[][][] dJdW = new float[nLayer][][];
     
     //Last layer dJdW :
-    int n = nLayer-1;
-    delta[n] = mProduct( (mInv(mSub(outputs,getAnswersFromLayer(n)))), sigmoidPrime(getSumsFromLayer(n)) );
-    dJdW[n] = mDot( mT(getAnswersFromLayer(n-1)), delta[n]);    
+    nLayer -= 1;
+    //delta[n] = mProduct( (mInv(mSub(outputs,getAnswersFromLayer(n)))), sigmoidPrime(getSumsFromLayer(n)) );
+    //dJdW[n] = mDot( mT(getAnswersFromLayer(n-1)), delta[n]);    
     
-    for(int layer = n-1; layer>=0; layer--){
-      delta[layer] = mProduct( mDot(delta[layer+1], (weights[layer+1])), sigmoidPrime(getSumsFromLayer(layer)));
-      dJdW[layer]  = mDot(mT(getAnswersFromLayer(layer-1)), delta[layer]);
+    delta[nLayer] = mProduct( (mInv(mSub(outputs,answers[nLayer+1]))), f.prime(sums[nLayer]) );
+    dJdW[nLayer] = mDot( mT(answers[nLayer]), delta[nLayer]); 
+    
+    for(int layer = nLayer-1; layer>=0; layer--){
+      //delta[layer] = mProduct( mDot(delta[layer+1], (weights[layer+1])), sigmoidPrime(getSumsFromLayer(layer)));
+      //dJdW[layer]  = mDot(mT(getAnswersFromLayer(layer-1)), delta[layer]);
+      
+      delta[layer] = mProduct( mDot(delta[layer+1], (weights[layer+1])), f.prime(sums[layer]));
+      dJdW[layer]  = mDot(mT(answers[layer]), delta[layer]);
     }
     
     return dJdW;
-    
   }
   
     
-  
   void processExamples(){
      
-    sums = new float[inputs.length][][];
-    answers = new float[inputs.length][][];
+    //sums = new float[inputs.length][][];
+    //answers = new float[inputs.length][][];
+
+    sums = new float[network.layers.length][inputs.length][];
+    answers = new float[network.layers.length+1][inputs.length][];
+    
+    answers[0] = inputs;
     
     for(int e=0; e<inputs.length; e++){  //Pour chaque exemple    
       network.forward(inputs[e]);
       
-      sums[e] = network.getAllSums();
-      answers[e] = network.getAllAnswers();
+      for(int layer=0; layer<network.layers.length; layer++){
+        sums[layer][e] = network.getSumsFromLayer(layer);
+        answers[layer+1][e] = network.getAnswersFromLayer(layer);
+      }
+       
+      //sums[e] = network.getAllSums();
+      //answers[e] = network.getAllAnswers();
     }
     
   }
   
+  /*
   float[][] getSumsFromLayer(int layer){  //TODO : à revoir (pas très optimisé)
     float[][] s = new float[answers.length][]; 
     for(int e=0; e<answers.length; e++) s[e] = sums[e][layer];
@@ -374,8 +353,6 @@ class Train
     float[][] ans = new float[answers.length][]; 
     for(int e=0; e<answers.length; e++) ans[e] = answers[e][layer];
     return ans;  
-  }
-  
-  
-  
+  }*/
+
 }
