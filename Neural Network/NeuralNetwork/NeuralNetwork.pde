@@ -27,24 +27,24 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   
     
   float mX = 0;
-  float[][] x = new float[1000][1];
-  for(int i=0;i<1000;i++){
+  float[][] x = new float[100][1];
+  for(int i=0;i<100;i++){
     float r = random(0,5);
     x[i][0] = r;
     mX = max(mX,r);
   }
   
   float mY = 0;
-  float[][] y = new float[1000][1];
-  for(int i=0;i<1000;i++){
+  float[][] y = new float[100][1];
+  for(int i=0;i<100;i++){
     y[i][0] = 2*x[i][0];
     mY = max(mY,2*x[i][0]);
   }
   
-  /*for(int i=0;i<100;i++){
-    x[i][0] ;
-    y[i][0] ;
-  }*/
+  for(int i=0;i<100;i++){
+    x[i][0] /= 5;
+    y[i][0] /= 5;
+  }
   
   /*float[][] x = {{3,5},
                  {5,1},
@@ -54,11 +54,11 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
                  {82},
                  {93}};
   */
-  showArray(x);
-  showArray(y);
+  //showArray(x);
+  //showArray(y);
   
   
-  Train train = new Train(network,x,y);
+  /*GradientDescent train = new GradientDescent(network,x,y);
   
   println("cost : ", train.cost());
   println();
@@ -77,13 +77,29 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   
   println("cost : ", train.cost());
   
-  float[][] i = {{3}, {5}};
+  
   
   println(network.forward(i[0])[0]);
   println(network.forward(i[1])[0]);
+  */
   
   
-  network.display(900,900,60);
+  GeneticAlgorithm train = new GeneticAlgorithm(network,100,x,y);
+  
+  for(int j=0; j<1000; j++){
+    train.train();
+    println("cost",j,":",min(train.costs()));
+  }
+  
+  
+  
+  float[][] i = {{3}, {5}};
+  
+  Network net = train.bestNetwork();
+  net.forward(i[1]);
+  
+  net.display(900,900,60);
+
   
 }
 
