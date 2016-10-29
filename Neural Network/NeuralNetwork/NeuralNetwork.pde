@@ -8,7 +8,11 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   
   background(255);
   translate(0,0); 
- 
+   
+   
+  randomSeed(100);
+  
+  
   //Système complet : ! nNeuron(i) = nWeights(i+1)
   /*int[][][] n = { { {1,2,1,2}, {2,1,2,1}, {3,0,1,2}, {1,1,2,1}, {2,1,3,1} },
                   { {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1} },

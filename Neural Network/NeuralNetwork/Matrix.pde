@@ -1,5 +1,5 @@
 
-float[] mAdd(float[] x, float[] y){
+float[] mAdd(float[] x, float[] y){  //Addition
   float[] s = new float[x.length]; 
   for(int i=0; i<x.length; i++) s[i] = x[i] + y[i]; 
   return s;
@@ -12,7 +12,7 @@ float[][] mAdd(float[][] x, float[][] y){
 }
 
 
-float[] mSub(float[] x, float[] y){
+float[] mSub(float[] x, float[] y){  //Soustraction
   float[] s = new float[x.length]; 
   for(int i=0; i<x.length; i++) s[i] = x[i] - y[i]; 
   return s;
@@ -25,7 +25,7 @@ float[][] mSub(float[][] x, float[][] y){
 }
 
 
-float[] mInv(float[] x){
+float[] mInv(float[] x){  //Inverse : mInv(x) = -x
   float[] s = new float[x.length]; 
   for(int i=0; i<x.length; i++) s[i] = -x[i]; 
   return s;
@@ -45,7 +45,7 @@ float[][] mProduct(float[][] x, float k){
   return s;
 }
 
-float[] mProduct(float[] x, float[] y){
+float[] mProduct(float[] x, float[] y){  //Produit de chaque élément de x et y entre eux
   float[] s = new float[x.length]; 
   for(int i=0; i<x.length; i++) s[i] = x[i] * y[i]; 
   return s;
@@ -60,7 +60,7 @@ float[][] mProduct(float[][] x, float[][] y){
 }
 
 
-float[][] mDot(float[][] x, float[][] y){
+float[][] mDot(float[][] x, float[][] y){  //Produit matriciel
   float[][] s = new float[x.length][y[0].length]; 
   for(int i=0; i<x.length; i++){
     for(int j=0; j<y[0].length; j++){
@@ -73,7 +73,7 @@ float[][] mDot(float[][] x, float[][] y){
 
 
 
-float[][] mT(float[][] x){
+float[][] mT(float[][] x){  //Transposée
   float[][] s = new float[x[0].length][x.length];
   for(int i=0; i<x.length; i++){
     for(int j=0; j<x[0].length; j++) s[j][i] = x[i][j]; 
@@ -81,11 +81,12 @@ float[][] mT(float[][] x){
   return s;
 }
 
-float[] listArray(float[][] x){
+/*
+float[] listArray(float[][] x){  //Convertie une matrice colonne en matrice ligne
   
   if(x[0].length>1) println("Error : listArray, length>1");
   
   float[] s = new float[x.length];
   for(int i=0; i<x.length; i++) s[i] = x[i][0];
   return s;
-}
+}*/

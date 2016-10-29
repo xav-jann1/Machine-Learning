@@ -32,7 +32,7 @@ class GradientDescent
       weights[layer] = mSub(weights[layer], mT(mProduct(dJdW[layer],scalar)) );
     }
     
-    network.newWeights(weights);
+    network.newWeights(weights);  //Intègre les nouveaux poids dans le réseau
     
   }
   
@@ -74,7 +74,7 @@ class GradientDescent
   }
   
     
-  void processExamples(){
+  void processExamples(){  //Récupère sums et answers du réseau pour chaque exemple
      
     //sums = new float[inputs.length][][];
     //answers = new float[inputs.length][][];
@@ -87,7 +87,7 @@ class GradientDescent
     for(int e=0; e<inputs.length; e++){  //Pour chaque exemple    
       network.forward(inputs[e]);
       
-      for(int layer=0; layer<network.layers.length; layer++){
+      for(int layer=0; layer<network.layers.length; layer++){  //Pour chaque couche
         sums[layer][e] = network.getSumsFromLayer(layer);
         answers[layer+1][e] = network.getAnswersFromLayer(layer);
       }
@@ -118,12 +118,9 @@ class GradientDescent
 
 class GeneticAlgorithm
 {
-  Network[] networks;
-  
-  int population;
-  
-  float[] costs;
-  
+  int population;       //Nombre de réseaux dans la population
+  Network[] networks;   //Liste de réseaux
+
   float[][] inputs;     //X : valeurs d'entrée pour chaque exemple
   float[][] outputs;    //Y : valeurs de sortie pour chaque exemple
   
@@ -144,18 +141,18 @@ class GeneticAlgorithm
   
   void train(){
 
-    costs = costs();
+    float[] costs = costs();
 
-    float[] fitness = fitness();
+    float[] fitness = fitness(costs);
     
     float[] pool = probability(fitness);
     
     //printArray(pool);
     
-    networks = selection(networks,pool,networks.length/2);
+    networks = selection(networks,pool,networks.length/2);  //Récupère la moitié des réseaux 
  
     int n = networks.length;
-    for(int network=n; network<population; network++){
+    for(int network=n; network<population; network++){  //Remplie la liste de réseaux avec de nouveaux réseaux à partir de ceux qui ont survécu
       networks = (Network[]) append(networks, crossover(networks[int(random(n))],networks[int(random(n))]));
     }
 
@@ -179,17 +176,17 @@ class GeneticAlgorithm
   }
   
   
-  float[] fitness(){
-    float[] result = new float[costs.length];
-    for(int network=0; network<costs.length; network++){
-      result[network] = -costs[network]/1000; 
+  float[] fitness(float[] x){
+    float[] result = new float[x.length];
+    for(int network=0; network<x.length; network++){
+      result[network] = -x[network]/1000; 
     }
     return result;
   }
   
-  float[] probability(float[] x){
+  float[] probability(float[] x){  //Crée le tableau de probabilité
     float sumSoftmax = sumSoftmax(x); 
-    for(int i=0; i<costs.length; i++) x[i] = exp(x[i])/sumSoftmax;
+    for(int i=0; i<x.length; i++) x[i] = exp(x[i])/sumSoftmax;
     return x;
   }
   
@@ -200,7 +197,7 @@ class GeneticAlgorithm
   }
   
   
-  Network[] selection(Network[] networks, float[] x, int nElement){
+  Network[] selection(Network[] networks, float[] x, int nElement){  //Récupère nElement d'un tableau de réseau en fonction des probabilités x
 
     Network[] result = new Network[nElement]; 
     
@@ -225,14 +222,14 @@ class GeneticAlgorithm
     return result;
   }
   
-  Network crossover(Network a, Network b){
+  Network crossover(Network a, Network b){  //Mélange deux réseaux pour en créer un nouveau
     
     Network n = a.copyParameters();  //Créer un nouveau réseau avec les paramètres d'un parent
     
-    float[][][] Wa = a.getAllWeights();
+    float[][][] Wa = a.getAllWeights();  //Récupère les poids de chaque parent
     float[][][] Wb = b.getAllWeights();
     
-    float[][][] Wn = copyArray(Wa);
+    float[][][] Wn = copyArray(Wa);  //Initialise la tableau des poids de l'enfant aux mêmes dimensions que les parents 
     
     for(int i=0; i<Wa.length; i++){
       for(int j=0; j<Wa[i].length; j++){
@@ -248,7 +245,7 @@ class GeneticAlgorithm
     return n;
   }
   
-  float[][][] copyArray(float[][][] x){  
+  float[][][] copyArray(float[][][] x){  //Permet de créer un tableau en 3 dimensions de mêmes tailles qu'un autre tableau
     float[][][] result = new float[x.length][][];
     for(int i=0; i<x.length; i++){
       result[i] = new float[x[i].length][];
@@ -261,8 +258,8 @@ class GeneticAlgorithm
   
   
   
-  Network bestNetwork(){
-    costs = costs();
+  Network bestNetwork(){  //Récupère le réseau dont le cost est le plus faible
+    float[] costs = costs();
     int bestNetwork=0;
     for(int n=0;n<costs.length;n++){
       if(costs[n]<costs[bestNetwork]) bestNetwork = n;

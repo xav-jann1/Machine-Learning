@@ -1,9 +1,9 @@
 
 class Neuron
 {
-  float[] weights;
-  float sum=0;
-  float output=0;
+  float[] weights;  //Poids du neurone pour chaque entrée
+  float sum=0;      //Somme des entrées
+  float output=0;   //Somme des entrées avec fonction d'activation
   
   Neuron(int i){
     weights = new float[i];    
@@ -23,7 +23,7 @@ class Neuron
     this.sum = sum;
     
     //softmax ou sigmoid
-    sum = f.sum(sum);
+    sum = f.sum(sum);  //Fonction d'activation
     output = sum;
     
     return sum;
