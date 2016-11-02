@@ -145,11 +145,11 @@ class GeneticAlgorithm
 
     float[] fitness = fitness(costs);
     
-    float[] pool = probability(fitness);
+    float[] p = probability(fitness);
     
     //printArray(pool);
     
-    networks = selection(networks,pool,networks.length/2);  //Récupère la moitié des réseaux 
+    networks = selection(networks,p,networks.length/2);  //Récupère la moitié des réseaux 
  
     int n = networks.length;
     for(int network=n; network<population; network++){  //Remplie la liste de réseaux avec de nouveaux réseaux à partir de ceux qui ont survécu

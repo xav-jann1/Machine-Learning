@@ -13,6 +13,8 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   randomSeed(100);
   
   
+  println("abcdefghijklmnopqrstuvwxyz");
+  
   //Système complet : ! nNeuron(i) = nWeights(i+1)
   /*int[][][] n = { { {1,2,1,2}, {2,1,2,1}, {3,0,1,2}, {1,1,2,1}, {2,1,3,1} },
                   { {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1}, {1,1,1,1,1} },
@@ -27,7 +29,11 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   //int[][][] n = {{{1,2},{3,4},{5,2}}};
   int[][] o = {{1,2,3}};
   
-  network = new Network(1,3,1,"id");
+  network = new Network(2,n,2,"id",true); //<>//
+  
+  network.forward(new float[]{2,3}); //<>//
+  
+  network.display(900,900,60);
   
     
   float mX = 0;
@@ -87,10 +93,10 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   println(network.forward(i[1])[0]);
   */
   
+  /*
+  GeneticAlgorithm train = new GeneticAlgorithm(network,10,x,y);
   
-  GeneticAlgorithm train = new GeneticAlgorithm(network,100,x,y);
-  
-  for(int j=0; j<1000; j++){
+  for(int j=0; j<10; j++){
     train.train();
     println("cost",j,":",min(train.costs()));
   }
@@ -104,7 +110,7 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   
   net.display(900,900,60);
 
-  
+  */
 }
 
 
