@@ -115,57 +115,48 @@ class Network
   boolean bias = false;
   
 
-  Network(int i, int l, int o, String s){  //Hidden Layer
+  Network(int i, int l, int o, String s, boolean b){
+    int intBias = 0;
+    if(b) intBias = 1;
+    
     inputs = new float[i];
     layers = new Layer[1+1];  //Hidden Layer + Outputs
     
     //Prepare layers:
-    layers[0] = new Layer(l,i);
-    layers[1] = new Layer(o,l);
+    layers[0] = new Layer(l,i+intBias);
+    layers[1] = new Layer(o,l+intBias);
     
     f = new ActivationFunction(s);
-  }
-  
-  Network(int i, int l, int o, String s, boolean b){
-    this(i,l,o,s);  //Doit être la première instruction mais les paramètres doivent être modifiés -> ?
+    
     bias = b;
-    
-    if(bias){
-      i++;
-      l++;
-    }
-    
-    
-    
+  }
+  
+  Network(int i, int l, int o, String s){  //Hidden Layer
+    this(i,l,o,s,false);
   }
   
   
-  Network(int i, int[] l, int o, String s){  //Hidden Layers
+  Network(int i, int[] l, int o, String s, boolean b){  //Hidden Layers
+    int intBias = 0;    
+    if(b) intBias = 1;
+    
     inputs = new float[i];
     layers = new Layer[l.length+1];
     
     //Prepare layers :
     for(int layer=0;layer<layers.length;layer++){
-      if(layer==0) layers[layer] = new Layer(l[layer],i);  //1st Layer
-       else if(layer==layers.length-1) layers[layer] = new Layer(o,l[layer-1]);  //Outputs
-        else layers[layer] = new Layer(l[layer],l[layer-1]);  //Hidden Layers   
+      if(layer==0) layers[layer] = new Layer(l[layer],i+intBias);  //1st Layer
+       else if(layer==layers.length-1) layers[layer] = new Layer(o,l[layer-1]+intBias);  //Outputs
+        else layers[layer] = new Layer(l[layer],l[layer-1]+intBias);  //Hidden Layers   
     }
     
     f = new ActivationFunction(s);
-
-  }
-  
-  Network(int i, int[] l, int o, String s, boolean b){  //Hidden Layers
-    this(i,l,o,s);
     
     bias = b;
-    if(bias){
-      i++;
-      for(int layer=0; layer<l.length; layer++) l[layer]++;
-    }
-    
-    //this(i,l,o,s); //Doit être la première instruction mais les paramètres doivent être modifiés -> ?
-    
+  }
+  
+  Network(int i, int[] l, int o, String s){  //Hidden Layers
+    this(i,l,o,s,false);
   }
   
   
@@ -193,9 +184,10 @@ class Network
     arrayCopy(inputs,layerValues);
     
     for(int layer=0; layer<layers.length; layer++){
-      
       if(bias) layerValues = addBias(layerValues);
-      layerValues = layers[layer].forward(layerValues, f);  //--> problème à partir d'ici : boucle infinie ??? //<>//
+      //layerValues[layerValues.length-1] = 1;
+      if(layer==layers.length-1) layerValues = layers[layer].forward(layerValues, f);  //--> problème à partir d'ici : boucle infinie ??? //<>//
+       else layerValues = layers[layer].forward(layerValues, f);
       println(layers.length);
     }
     
@@ -203,7 +195,7 @@ class Network
   }
   
   float[] addBias(float[] x){   
-    for(int i=0;i<x.length;i++) x = append(x,1);
+    x = append(x,1);
     return x;
   }
   
@@ -277,6 +269,8 @@ class Network
     
     for(int layer=0; layer<layers.length; layer++) neuronsInLayer = append(neuronsInLayer, layers[layer].nNeurons()-1);
     
+    if(bias) for(int layer=0; layer<neuronsInLayer.length-1; layer++) neuronsInLayer[layer]++ ;  //Ajoute un neurone pour chaque couche sauf l'output 
+    
     float e = h/max(neuronsInLayer);  //Ecart standard entre les cercles défini par la 'couche' ayant le plus de cercles
     float nLayers = neuronsInLayer.length;
     
@@ -293,7 +287,10 @@ class Network
         if(layer<nLayers-1){  //La dernière couche n'a pas de couche suivante !
           for(int nextNeuron=0; nextNeuron <= neuronsInLayer[layer+1]; nextNeuron++){
             //getWeightLine();
-            line(x,y0+e*neuron,x+w/(nLayers-1),y1+e*nextNeuron);
+            if(bias){
+              if(nextNeuron<neuronsInLayer[layer+1] || layer==nLayers-2 )  line(x,y0+e*neuron,x+w/(nLayers-1),y1+e*nextNeuron);
+            }else line(x,y0+e*neuron,x+w/(nLayers-1),y1+e*nextNeuron);
+            
           }
         }
                 
@@ -302,8 +299,13 @@ class Network
         ellipse(x,y0+e*neuron,rC,rC);
         
         fill(0);  //Valeur du neurone
-        if(layer==0) text(int(inputs[neuron]),x,y0+e*neuron);
-         else text(layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
+        
+        if(bias && layer<nLayers-1 && neuron == neuronsInLayer[layer]){
+          text(1,x,y0+e*neuron);
+        }else{
+          if(layer==0) text(int(inputs[neuron]),x,y0+e*neuron);
+           else text(layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
+        }
       }
       
     }

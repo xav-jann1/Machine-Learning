@@ -29,9 +29,9 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   //int[][][] n = {{{1,2},{3,4},{5,2}}};
   int[][] o = {{1,2,3}};
   
-  network = new Network(1,3,1,"id",true); //<>//
+  network = new Network(2,n,2,"id",true); //<>//
   
-  network.forward(new float[]{1}); //<>//
+  network.forward(new float[]{2,3}); //<>//
   
   network.display(900,900,60);
   
