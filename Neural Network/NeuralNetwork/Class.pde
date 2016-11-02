@@ -112,6 +112,8 @@ class Network
   
   ActivationFunction f;
   
+  boolean bias = false;
+  
 
   Network(int i, int l, int o, String s){  //Hidden Layer
     inputs = new float[i];
@@ -123,6 +125,20 @@ class Network
     
     f = new ActivationFunction(s);
   }
+  
+  Network(int i, int l, int o, String s, boolean b){
+    this(i,l,o,s);  //Doit être la première instruction mais les paramètres doivent être modifiés -> ?
+    bias = b;
+    
+    if(bias){
+      i++;
+      l++;
+    }
+    
+    
+    
+  }
+  
   
   Network(int i, int[] l, int o, String s){  //Hidden Layers
     inputs = new float[i];
@@ -138,6 +154,20 @@ class Network
     f = new ActivationFunction(s);
 
   }
+  
+  Network(int i, int[] l, int o, String s, boolean b){  //Hidden Layers
+    this(i,l,o,s);
+    
+    bias = b;
+    if(bias){
+      i++;
+      for(int layer=0; layer<l.length; layer++) l[layer]++;
+    }
+    
+    //this(i,l,o,s); //Doit être la première instruction mais les paramètres doivent être modifiés -> ?
+    
+  }
+  
   
   Network(int i, int[][][] l, int[][] o, String s){  //Hidden Layers with weights - TODO : enlever l'entrée des outputs (l'intégrer dans l)
     inputs = new float[i];
@@ -158,15 +188,25 @@ class Network
     
   float[] forward(float[] inputs){
     this.inputs = inputs;
+
+    float[] layerValues = new float[inputs.length];
+    arrayCopy(inputs,layerValues);
     
-    float[] layerValues = new float[0];
     for(int layer=0; layer<layers.length; layer++){
-      if(layer==0) layerValues = layers[layer].forward(inputs, f);
-       else layerValues = layers[layer].forward(layerValues, f);
+      
+      if(bias) layerValues = addBias(layerValues);
+      layerValues = layers[layer].forward(layerValues, f);  //--> problème à partir d'ici : boucle infinie ??? //<>//
+      println(layers.length);
     }
     
     return layerValues;
   }
+  
+  float[] addBias(float[] x){   
+    for(int i=0;i<x.length;i++) x = append(x,1);
+    return x;
+  }
+  
   
   float cost(float[] inputs, float[] outputs){
     float J =0 ;
@@ -214,7 +254,7 @@ class Network
     int[] nLayers = new int[network.layers.length-1];
     for(int l=0;l<network.layers.length-1;l++) nLayers[l] = network.layers[l].nNeurons();
     
-    return new Network(nInputs(),nLayers,nOutputs(),f.functionName);
+    return new Network(nInputs(),nLayers,nOutputs(),f.functionName,bias);
   }
   
   
@@ -233,6 +273,8 @@ class Network
     
     //Ajout des couches :
     int[] neuronsInLayer = {inputs.length-1};
+    //if(bias) neuronsInLayer[0]++;
+    
     for(int layer=0; layer<layers.length; layer++) neuronsInLayer = append(neuronsInLayer, layers[layer].nNeurons()-1);
     
     float e = h/max(neuronsInLayer);  //Ecart standard entre les cercles défini par la 'couche' ayant le plus de cercles
