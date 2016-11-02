@@ -108,6 +108,7 @@ class Layer
 class Network
 {
   float[] inputs;
+  int nInputs;
   Layer[] layers;  //Hidden Layers + Outputs
   
   ActivationFunction f;
@@ -120,6 +121,7 @@ class Network
     if(b) intBias = 1;
     
     inputs = new float[i];
+    nInputs = i;
     layers = new Layer[1+1];  //Hidden Layer + Outputs
     
     //Prepare layers:
@@ -141,6 +143,7 @@ class Network
     if(b) intBias = 1;
     
     inputs = new float[i];
+    nInputs = i;
     layers = new Layer[l.length+1];
     
     //Prepare layers :
@@ -162,6 +165,7 @@ class Network
   
   Network(int i, int[][][] l, int[][] o, String s){  //Hidden Layers with weights - TODO : enlever l'entrée des outputs (l'intégrer dans l)
     inputs = new float[i];
+    nInputs = i;
     layers = new Layer[l.length+1];
     
     //Prepare layers :
@@ -188,7 +192,6 @@ class Network
       //layerValues[layerValues.length-1] = 1;
       if(layer==layers.length-1) layerValues = layers[layer].forward(layerValues, f);  //--> problème à partir d'ici : boucle infinie ??? //<>//
        else layerValues = layers[layer].forward(layerValues, f);
-      println(layers.length);
     }
     
     return layerValues;
@@ -246,7 +249,7 @@ class Network
     int[] nLayers = new int[network.layers.length-1];
     for(int l=0;l<network.layers.length-1;l++) nLayers[l] = network.layers[l].nNeurons();
     
-    return new Network(nInputs(),nLayers,nOutputs(),f.functionName,bias);
+    return new Network(nInputs,nLayers,nOutputs(),f.functionName,bias);
   }
   
   
@@ -264,7 +267,7 @@ class Network
     translate(rC/2 + w/2, rC/2 + h/2);  //Enlève l'espace occupé par les rayons des cercles et centre au milieu
     
     //Ajout des couches :
-    int[] neuronsInLayer = {inputs.length-1};
+    int[] neuronsInLayer = {nInputs-1}; //inputs.length-1};
     //if(bias) neuronsInLayer[0]++;
     
     for(int layer=0; layer<layers.length; layer++) neuronsInLayer = append(neuronsInLayer, layers[layer].nNeurons()-1);
@@ -303,8 +306,10 @@ class Network
         if(bias && layer<nLayers-1 && neuron == neuronsInLayer[layer]){
           text(1,x,y0+e*neuron);
         }else{
-          if(layer==0) text(int(inputs[neuron]),x,y0+e*neuron);
-           else text(layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
+          if(layer==0){
+            if(neuron > inputs.length-1) text("e",x,y0+e*neuron);
+             else text(int(inputs[neuron]),x,y0+e*neuron);
+          }else text(layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
         }
       }
       

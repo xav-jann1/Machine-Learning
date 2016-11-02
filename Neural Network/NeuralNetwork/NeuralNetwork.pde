@@ -29,11 +29,11 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   //int[][][] n = {{{1,2},{3,4},{5,2}}};
   int[][] o = {{1,2,3}};
   
-  network = new Network(2,n,2,"id",true); //<>//
+  network = new Network(1,n,1,"id",true); //<>//
   
-  network.forward(new float[]{2,3}); //<>//
+  //network.forward(new float[]{2}); //<>//
   
-  network.display(900,900,60);
+  //network.display(900,900,60);
   
     
   float mX = 0;
@@ -52,8 +52,8 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   }
   
   for(int i=0;i<100;i++){
-    x[i][0] /= 5;
-    y[i][0] /= 5;
+    //x[i][0] /= 5;
+    //y[i][0] /= 5;
   }
   
   /*float[][] x = {{3,5},
@@ -93,8 +93,8 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   println(network.forward(i[1])[0]);
   */
   
-  /*
-  GeneticAlgorithm train = new GeneticAlgorithm(network,10,x,y);
+  
+  GeneticAlgorithm train = new GeneticAlgorithm(network,1000,x,y);
   
   for(int j=0; j<10; j++){
     train.train();
@@ -110,7 +110,7 @@ void setup(){  // TODO : Ajouter des messages d'erreurs
   
   net.display(900,900,60);
 
-  */
+  
 }
 
 
