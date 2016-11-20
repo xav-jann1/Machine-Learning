@@ -1,0 +1,33 @@
+.mdl-grid {
+  max-width: 960px;
+}
+
+.mdl-cell {
+  /*background-color: #AAF;*/
+}
+
+#neural-structure {
+  background-color: #666;
+  min-height: 50px;
+  height: 60px;
+}
+
+#neural-parameters {
+  background-color: #888;
+}
+
+#neural-graph {
+  min-height: 278px;
+  background-color: #AAA;
+}
+
+#examples {
+  min-height: 278px;
+  background-color: #EEE
+
+}
+
+.separator {
+  height: 18px;
+
+}
