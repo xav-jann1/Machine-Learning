@@ -13,11 +13,11 @@
 }
 
 #neural-parameters {
+  min-height: 278px;
   background-color: #888;
 }
 
 #neural-graph {
-  min-height: 278px;
   background-color: #AAA;
 }
 
@@ -25,6 +25,10 @@
   min-height: 278px;
   background-color: #EEE
 
+}
+
+#learn-graphs{
+  background-color: #EEE
 }
 
 .separator {
