@@ -21,11 +21,18 @@ html *
   margin-top: 4px;
 }
 
+#neural-title{
+  margin-top: -11px;
+  margin-bottom: 6px;
+  margin-left: -9px;
+  min-width: 300px;
+}
+
 
 #neural-structure {
   background-color: #FAFAFA;
   min-height: 50px;
-  height: 90px;
+  height: 100px;
 }
 
 #neural-graph {
@@ -33,6 +40,7 @@ html *
 }
 
 #neural-parameters {
+  /* margin-top : 23px; /* Pour mettre au même niveau que neural-structure */
   min-height: 278px;
   background-color: #FAFAFA;
   
