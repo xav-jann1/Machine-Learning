@@ -30,33 +30,32 @@ html *
 
 
 #neural-structure {
-  /*background-color: #FAFAFA;*/
+  background-color: #FAFAFA;
   min-height: 50px;
   height: 100px;
 }
 
 #neural-graph {
-  /*background-color: #FAFAFA;*/
+  background-color: #FAFAFA;
 }
 
 #neural-parameters {
   /* margin-top : 23px; /* Pour mettre au même niveau que neural-structure */
   min-height: 278px;
-  /*background-color: #FAFAFA;*/
+  background-color: #FAFAFA;
   
 }
 
 #examples {
   min-height: 278px;
-  /*background-color: #EEE*/
+  background-color: #EEE
 
 }
 
 #learn-graphs{
-  /*background-color: #EEE*/
+  background-color: #EEE
 }
 
 .separator {
   height: 18px;
-
 }
