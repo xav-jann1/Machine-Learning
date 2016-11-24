@@ -7,10 +7,6 @@ html *
   max-width: 960px;
 }
 
-.mdl-cell {
-  /*background-color: #AAF;*/
-}
-
 
 .card-title {
   font-family: roboto;
@@ -52,7 +48,6 @@ html *
 #neural-parameters-layout {
   margin: 6px 20px;
 
-  
 }
 
 #examples {
