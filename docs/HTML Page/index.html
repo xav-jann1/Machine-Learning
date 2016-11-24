@@ -17,6 +17,18 @@
 
     <link rel="stylesheet" href="style.css">
 
+
+    <script src="libraries/p5.js" type="text/javascript"></script>
+
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+
+    <script src="sketch.js" type="text/javascript"></script>
+    <script src="objects.js" type="text/javascript"></script>
+
+
+
+
 </head>
 
 <body>
@@ -25,7 +37,7 @@
 
         <header class="mdl-layout__header">
             <div class="mdl-layout-icon">
-                <img style="margin: 3px 0px;"src="images/logo.svg">
+                <img style="margin: 4px 0px;"src="images/logo.svg">
             </div>
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">Neural Networks</span>
@@ -52,20 +64,66 @@
 
                         <div class="separator mdl-cell--12-col"></div>
 
-                        <div id="neural-graph" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
-                            <div class="card-title">Graphe</div>
+                        <div id="neural-parameters" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
+                            <div class="card-title">Paramètres</div>
+
+                            <div id="neural-parameters-layout">
+
+                                <p style="font-size: 14px;">Fonction d'activation</p>
+                                <p style="font-size: 14px;">Méthode d'apprentissage</p>
+
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                                    <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" unchecked>
+                                    <span style="font-size: 14px" class="mdl-checkbox__label">Bias</span>
+                                </label>
+
+                                
+
+                            </div>
                         </div>
 
                     </div>
 
-                    <div id="neural-parameters" class="mdl-cell mdl-card--expand mdl-cell--7-col mdl-shadow--2dp">
-                        <div class="card-title">Parameters</div>
+                    <div id="neural-graph" class="mdl-cell mdl-card--expand mdl-cell--7-col mdl-shadow--2dp">
+                        <div class="card-title">Graphe</div>
+                        <div id="p5-graph" style="margin: 20px 20px;"></div>
                     </div>
 
                 </div>
 
+
                 <div id="examples" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">
                     <div class="card-title">Exemples</div>
+                    
+
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Name</th>
+                                <th>Quantity</th>
+                                <th>Source</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Add numbers</td>
+                                <td>25</td>
+                                <td class="mdl-data-table__cell--non-numeric">Me</td>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Houses prices</td>
+                                <td>50</td>
+                                <td class="mdl-data-table__cell--non-numeric">Me</td>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">One more..</td>
+                                <td>10</td>
+                                <td class="mdl-data-table__cell--non-numeric">Me</td>
+                            </tr>
+                        </tbody>
+                    </table>
+   
+
                 </div>
 
             </div>
