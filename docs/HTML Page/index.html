@@ -6,11 +6,14 @@
     <title>Neural Networks</title>
     <meta charset="utf-8">
     <meta name="description" content="... ... ...">
+    <link rel="icon" href="images/icon.png">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
     <link rel="stylesheet" href="style.css">
 
@@ -31,25 +34,45 @@
         <main class="mdl-layout__content mdl-color--grey-100">
 
             <div class="mdl-grid">
+                
+                <div class="mdl-cell mdl-cell--7-col mdl-grid mdl-shadow--2dp">
+                  
+                    <div class="mdl-cell mdl-cell--5-col mdl-grid mdl-grid--no-spacing ">
 
-                <div style="background-color: #EEE" class="mdl-cell mdl-cell--7-col mdl-grid mdl-shadow--2dp">
+                        <div id="neural-structure" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
+                            <div class="card-title">Structure</div>
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                                <i class="material-icons">add</i>
+                            </button>
+                        </div>
 
-                    <div class="mdl-cell mdl-cell--6-col mdl-grid mdl-grid--no-spacing ">
-                        <div id="neural-structure" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">Structure</div>
                         <div class="separator mdl-cell--12-col"></div>
-                        <div id="neural-graph" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">Graph</div>
+
+                        <div id="neural-graph" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
+                            <div class="card-title">Graphe</div>
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                                <i class="material-icons">add</i>
+                            </button>
+                        </div>
+
                     </div>
 
-                    <div id="neural-parameters" class="mdl-cell mdl-card--expand mdl-cell--6-col mdl-shadow--2dp">Parameters</div>
+                    <div id="neural-parameters" class="mdl-cell mdl-card--expand mdl-cell--7-col mdl-shadow--2dp">
+                        <div class="card-title">Parameters</div>
+                    </div>
 
                 </div>
 
-                <div id="examples" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">Examples</div>
+                <div id="examples" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">
+                    <div class="card-title">Exemples</div>
+                </div>
 
             </div>
 
             <div style="height:550px" class="mdl-grid">
-                <div id="learn-graphs" class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">Learn Graphs</div>
+                <div id="learn-graphs" class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+                    <div class="card-title">Learn Graph</div>
+                </div>
             </div>
 
         </main>
