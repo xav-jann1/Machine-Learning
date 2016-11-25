@@ -16,7 +16,7 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket){
-  console.log(socket.id);
+  console.log(socket.handshake.time + " :\n" + socket.handshake.headers['user-agent'] + "\n");
 
   socket.on('mouse', mouseMsg);
 
