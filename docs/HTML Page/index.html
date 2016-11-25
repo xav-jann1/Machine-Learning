@@ -58,9 +58,16 @@
                         <div id="neural-title" class="card-title">Neural Network</div>
                         <div id="neural-structure" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
                             <div class="card-title">Structure</div>
-                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                            <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
                                 <i class="material-icons">add</i>
-                            </button>
+                            </button> -->
+
+                            <div id="neural-structure-field" class="mdl-textfield mdl-js-textfield">
+                                <input id="neural-structure-field-value" class="mdl-textfield__input"  pattern="[1-9 ].{4,}" type="text">
+                                <label class="mdl-textfield__label">Structure...</label>
+                                <span class="mdl-textfield__error">Minimum 3 chiffres</span>
+                            </div>
+                      
                         </div>
 
                         <div class="separator mdl-cell--12-col"></div>
@@ -86,7 +93,7 @@
 
                     <div id="neural-graph" class="mdl-cell mdl-card--expand mdl-cell--7-col mdl-shadow--2dp">
                         <div class="card-title">Graphe</div>
-                        <div id="p5-graph" style="margin: 18px 20px; border: 2px;"></div>
+                        <div id="p5-graph" style="margin: 18px 20px;"></div>
                     </div>
 
                 </div>

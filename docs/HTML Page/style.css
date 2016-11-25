@@ -32,6 +32,11 @@ html *
   height: 100px;
 }
 
+#neural-structure-field{
+  margin: -10px 20px;
+  max-width: 150px;
+}
+
 #neural-parameters {
   background-color: #FAFAFA;
 }
