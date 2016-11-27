@@ -8,7 +8,7 @@ function setup() {
   
   structureField = select("#neural-structure-field-value");
   structureField.value("2 3 1");
-  structureField.changed(newFieldNeuralStructure);
+  structureField.input(newFieldNeuralStructure);
 
 
   displayNewNetwork(2, [3], 1);
