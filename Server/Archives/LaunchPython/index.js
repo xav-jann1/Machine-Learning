@@ -1,5 +1,5 @@
 
-console.log('Server in starting..');
+console.log('Server is starting..');
 
 var express = require('express');
 
