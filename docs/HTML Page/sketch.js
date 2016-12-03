@@ -19,20 +19,17 @@ function setup() {
 }
 
 function sendData(){
-
   console.log("Sending data ...");
 
   var data = {
     data: textToNumbers(structureField.value())  // TODO: Ajouter vérification
   };
-
   console.log(data);
 
-  httpPost('/computePython',data,'json', dataPosted, postError);
-
+  httpPost('/computePython',data,'json', dataPosted, postError);  //Envoie de la demande au serveur
 }
 
-function dataPosted(result){
+function dataPosted(result){  //Réponse du serveur
   console.log(result.sum);
 }
 
@@ -43,25 +40,15 @@ function postError(error){
 
 
 function newFieldNeuralStructure(){
-
   var text = structureField.value();
-
   numbers = textToNumbers(text);
 
   if(numbers.length>=2){ //Minimum les entrées et sorties
     displayNewNetwork(numbers);
   }else console.log("! : il faut minimum 2 chiffres (>0)");
-
-
-  //var i = numbers[0];
-  //var o = numbers.pop();  //Supprime et récupère la dernière valeur
-  //numbers.splice(0,1);  //Enlève la première valeur -> numbers ne contient plus la 1ère et dernière valeur
-  //var n = numbers;
-
 }
 
 function textToNumbers(text){
-
   numbers = split(text," ");  //Sépare les éléments du texte
 
   var onlyNumbers = true; //Trie des valeurs
@@ -81,7 +68,6 @@ function textToNumbers(text){
   return numbers;
 }
 
-
 function displayNewNetwork(layers){
   background(250);
   n = new Network(layers);
@@ -93,7 +79,7 @@ function displayNewNetwork(layers){
   n.display(width,height,32);
 }
 
-function draw() {
 
+function draw() {
 
 }
