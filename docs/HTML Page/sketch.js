@@ -1,6 +1,7 @@
 p5.disableFriendlyErrors = true;
 var n;
-var structureField
+var structureField;
+var button;
 function setup() {
 
   var canvas = createCanvas(250, 250);
@@ -10,15 +11,58 @@ function setup() {
   structureField.value("2 3 1");
   structureField.input(newFieldNeuralStructure);
 
+  button = select("#sendButton");
+  button.mousePressed(sendData);
 
   displayNewNetwork([2,3,1]);
 
 }
 
+function sendData(){
+
+  console.log("Sending data ...");
+
+  var data = {
+    data: textToNumbers(structureField.value())  // TODO: Ajouter vérification
+  };
+
+  console.log(data);
+
+  httpPost('/computePython',data,'json', dataPosted, postError);
+
+}
+
+function dataPosted(result){
+  console.log(result.sum);
+}
+
+function postError(error){
+  console.log(error);
+}
+
+
 
 function newFieldNeuralStructure(){
 
-  numbers = split(structureField.value()," ");  //Sépare les éléments du texte récupéré
+  var text = structureField.value();
+
+  numbers = textToNumbers(text);
+
+  if(numbers.length>=2){ //Minimum les entrées et sorties
+    displayNewNetwork(numbers);
+  }else console.log("! : il faut minimum 2 chiffres (>0)");
+
+
+  //var i = numbers[0];
+  //var o = numbers.pop();  //Supprime et récupère la dernière valeur
+  //numbers.splice(0,1);  //Enlève la première valeur -> numbers ne contient plus la 1ère et dernière valeur
+  //var n = numbers;
+
+}
+
+function textToNumbers(text){
+
+  numbers = split(text," ");  //Sépare les éléments du texte
 
   var onlyNumbers = true; //Trie des valeurs
   for(var i=numbers.length-1; i>=0; i--){
@@ -29,20 +73,14 @@ function newFieldNeuralStructure(){
     }else numbers[i]=int(numbers[i]);
   }
 
-  if(numbers.length<2 || !onlyNumbers){ //Message d'erreur
-    console.log("! : il faut minimum 2 chiffres (>0)");
-    return ;
+  if(!onlyNumbers){ //Message d'erreur
+    console.log("not only numbers !!");
+    return false;
   }
 
-  //var i = numbers[0];
-  //var o = numbers.pop();  //Supprime et récupère la dernière valeur
-  //numbers.splice(0,1);  //Enlève la première valeur -> numbers ne contient plus la 1ère et dernière valeur
-  //var n = numbers;
-
-  displayNewNetwork(numbers);
-
-
+  return numbers;
 }
+
 
 function displayNewNetwork(layers){
   background(250);
