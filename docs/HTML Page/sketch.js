@@ -1,7 +1,7 @@
 p5.disableFriendlyErrors = true;
 var n;
 var structureField;
-var button;
+var button, answer;
 function setup() {
 
   var canvas = createCanvas(250, 250);
@@ -13,6 +13,9 @@ function setup() {
 
   button = select("#sendButton");
   button.mousePressed(sendData);
+
+  answer = select("#answer");
+  answer.html(6);
 
   displayNewNetwork([2,3,1]);
 
@@ -31,6 +34,7 @@ function sendData(){
 
 function dataPosted(result){  //Réponse du serveur
   console.log(result.sum);
+  answer.html(result.sum);
 }
 
 function postError(error){
