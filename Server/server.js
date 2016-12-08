@@ -16,7 +16,7 @@ var spawn = require("child_process").spawn;
 app.post('/computePython', function(request, response){
 
   var data = request.body['data[]'];
-  console.log(data);
+  //console.log(data);
 
   var process = spawn('python',["add data.py",data]); //Lance le program python avec data en paramètre
 
@@ -28,7 +28,7 @@ app.post('/computePython', function(request, response){
 
   process.stdout.on('data', function (data){
     sum = data.toString();
-    console.log(sum)
+    console.log(sum);
     reply.sum = sum;  // TODO: Enlever le saut de ligne
     response.send(reply); //Envoie la réponse
   });
