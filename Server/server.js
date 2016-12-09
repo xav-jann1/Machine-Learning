@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var app = express();
 var server = app.listen(3010);
 
-app.use(express.static('../docs/HTML Page'));
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(express.static('../docs/Neural Network'));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 
