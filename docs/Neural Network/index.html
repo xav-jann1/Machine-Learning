@@ -68,25 +68,39 @@
 
                         <div class="separator mdl-cell--12-col"></div>
 
-                        <div id="neural-parameters" class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
+                        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-card--expand mdl-cell--12-col-desktop">
                             <div class="card-title">Paramètres</div>
 
                             <div id="neural-parameters-layout">
 
-                                <p style="font-size: 14px;">Fonction d'activation</p>
-                                <p style="font-size: 14px;">Méthode d'apprentissage</p>
+                                <div class="card-text">Fonction d'activation :</div>
+                                <select id="select-activation" class="select-box">
+                                    <option value="id">Identité</option>
+                                    <option value="sigmoid">Sigmoid</option>
+                                    <option value="softmax">Softmax</option>
+                                    <option value="tanh">tanh</option>
+                                </select>
 
-                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                                <div class="card-text">Méthode d'apprentissage :</div>
+                                <select id="select-learning" class="select-box">
+                                    <option value="gradient">Gradient Descent</option>
+                                    <option value="evolution">Evolution</option>
+                                </select>
+
+                                <label id="checkbox-bias"class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
                                     <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" unchecked>
                                     <span style="font-size: 14px" class="mdl-checkbox__label">Bias</span>
                                 </label>
 
+                                <!--
                                 <span>
                                     <button id="sendButton" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
                                         <i class="material-icons">send</i>
                                     </button>
                                     <span style="margin-left:10px;" id="answer">56</span>
                                 </span>
+                                -->
+
 
 
                             </div>

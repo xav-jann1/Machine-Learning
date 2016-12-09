@@ -1,6 +1,6 @@
 html *
 {
-   font-family: roboto;
+  font-family: roboto;
 }
 
 .mdl-grid {
@@ -15,7 +15,24 @@ html *
   color: #999;
   margin-left: 7px;
   margin-top: 4px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+}
+
+.card-text {
+  font-family: roboto;
+  font-weight: 100;
+  font-size: 14px;
+  color: #555;
+  /*margin-left: 7px;
+  margin-top: 4px;
+  margin-bottom: 5px;*/
+}
+
+.select-box{
+  margin-left: 15px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+
 }
 
 #neural-title{
@@ -28,8 +45,8 @@ html *
 
 #neural-structure {
   background-color: #FAFAFA;
-  min-height: 50px;
-  height: 100px;
+  min-height: 80px;
+  height: 90px;
 }
 
 #neural-structure-field{
@@ -37,16 +54,22 @@ html *
   max-width: 150px;
 }
 
+#checkbox-bias{
+  margin: 5px 5px;
+
+}
+
+/*
 #neural-parameters {
   background-color: #FAFAFA;
-}
+}*/
 
 #neural-graph {
   /* margin-top : 23px; /* Pour mettre au même niveau que neural-structure */
   min-height: 278px;
   background-color: #FAFAFA;
 
-  
+
 }
 
 
@@ -58,7 +81,7 @@ html *
 #examples {
   min-height: 278px;
   background-color: #EEE
-  
+
 
 }
 

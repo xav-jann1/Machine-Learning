@@ -38,23 +38,30 @@ function Layer(nNeurons, nInputs) {
 }
 
 
-function Network(layers) {
+function Network(layers, bias) {
+
+  this.bias = 0;
+  if(typeof bias !== 'undefined') this.bias = int(bias);
+
   this.inputs = [];
 
   this.layers = [];
   //this.layers.push(new Layer(n[0], i));   //Add 1st layer with inputs
   for (var layer = 1; layer < layers.length; layer++) {
-    this.layers.push(new Layer(layers[layer], layers[layer - 1]));
+    this.layers.push(new Layer(layers[layer], layers[layer - 1] + bias));
   }
   //this.layers.push(new Layer(o, n[this.layers.length - 1]));  //Add output layer
 
 
   this.forward = function(inputs) {
-    this.inputs = inputs;
+    arrayCopy(inputs,this.inputs);
+
     var layerInputs = inputs;
     for(var layer=0; layer<this.layers.length;layer++){
+      if(bias) layerInputs.push(1);
       layerInputs = this.layers[layer].forward(layerInputs);
     }
+
     return layerInputs;
   }
 
@@ -68,6 +75,7 @@ function Network(layers) {
     var neuronsInLayer = [this.inputs.length-1]; //inputs.length-1};
 
     for(var l=0; l<this.layers.length; l++) neuronsInLayer.push(this.layers[l].nNeurons()-1);
+    if(bias) for(var i=0; i<neuronsInLayer.length-1; i++) neuronsInLayer[i]++;  //Ajoute un neurone pour chaque couche sauf la dernière
 
     var e = h/max(neuronsInLayer);  //Ecart standard entre les cercles défini par la 'couche' ayant le plus de cercles
     var nLayers = neuronsInLayer.length;
@@ -86,7 +94,9 @@ function Network(layers) {
         if(layer<nLayers-1){  //La dernière couche n'a pas de couche suivante !
           for(var nextNeuron=0; nextNeuron <= neuronsInLayer[layer+1]; nextNeuron++){
             //getWeightLine();
-            line(x,y0+e*neuron,x+w/(nLayers-1),y1+e*nextNeuron);
+            if(bias){
+              if(nextNeuron<neuronsInLayer[layer+1] || layer==nLayers-2) line(x,y0+e*neuron,x+w/(nLayers-1),y1+e*nextNeuron);
+            }else line(x,y0+e*neuron,x+w/(nLayers-1),y1+e*nextNeuron);
           }
         }
 
@@ -96,11 +106,14 @@ function Network(layers) {
 
         fill(0);  //Valeur du neurone
 
-        if(layer===0){
-          if(neuron > this.inputs.length-1) text("e",x,y0+e*neuron);
-           else text(int(this.inputs[neuron]),x,y0+e*neuron);
-        }else text(this.layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
-
+        if(bias && layer<nLayers-1 && neuron == neuronsInLayer[layer]){
+          text(1,x,y0+e*neuron);
+        }else{
+          if(layer===0){
+            if(neuron > this.inputs.length-1) text("e",x,y0+e*neuron);
+             else text(int(this.inputs[neuron]),x,y0+e*neuron);
+          }else text(this.layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
+        }
       }
 
     }
