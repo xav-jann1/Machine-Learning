@@ -61,7 +61,7 @@ function sendData(){
 
 function dataPosted(result){  //Réponse du serveur
   console.log(result.sum);
-  answer.html(result.sum);
+  //answer.html(result.sum);
 }
 
 function postError(error){
@@ -107,8 +107,8 @@ function displayNewNetwork(layers, bias){
   for(var j=0; j<layers[0]; j++) inputs.push(1);
 
   n.forward(inputs);
-  translate(10,10);
-  n.display(width-20,height-20,25);
+  translate(2,2);
+  n.display(width-4,height-4,28);
 }
 
 
