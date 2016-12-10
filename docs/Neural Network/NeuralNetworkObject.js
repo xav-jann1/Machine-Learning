@@ -82,6 +82,7 @@ function Network(layers, bias) {
 
     //stroke(0); strokeWeight(1);
     textAlign(CENTER,CENTER); textSize(12);
+    var neuronColor = ['#F44336','#2196F3','#4CAF50'];
 
     for(var layer=0; layer<nLayers; layer++){
       var x = w/(nLayers-1)*(layer-(nLayers-1)/2);  //Position x de la couche
@@ -91,6 +92,7 @@ function Network(layers, bias) {
       for(var neuron=0; neuron <= neuronsInLayer[layer]; neuron++){  //Neurones de la couche
 
         //Lignes qui se relient à la couche suivante :
+        strokeWeight(2); stroke(100);
         if(layer<nLayers-1){  //La dernière couche n'a pas de couche suivante !
           for(var nextNeuron=0; nextNeuron <= neuronsInLayer[layer+1]; nextNeuron++){
             //getWeightLine();
@@ -101,18 +103,22 @@ function Network(layers, bias) {
         }
 
         //Neurone :
-        fill(255);
+        fill(255); strokeWeight(3);
+        if(layer==0) stroke(neuronColor[0]);  //Input
+         else if(layer==nLayers-1) stroke(neuronColor[2]);  //output
+          else stroke(neuronColor[1]);  //Inside
         ellipse(x,y0+e*neuron,rC,rC);
 
         fill(0);  //Valeur du neurone
 
         if(bias && layer<nLayers-1 && neuron == neuronsInLayer[layer]){
+          noStroke();
           text(1,x,y0+e*neuron);
-        }else{
+        }else{/*
           if(layer===0){
             if(neuron > this.inputs.length-1) text("e",x,y0+e*neuron);
              else text(int(this.inputs[neuron]),x,y0+e*neuron);
-          }else text(this.layers[layer-1].getAnswer(neuron),x,y0+e*neuron);
+          }else text(this.layers[layer-1].getAnswer(neuron),x,y0+e*neuron);*/
         }
       }
 

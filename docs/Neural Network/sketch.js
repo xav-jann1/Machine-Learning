@@ -107,7 +107,8 @@ function displayNewNetwork(layers, bias){
   for(var j=0; j<layers[0]; j++) inputs.push(1);
 
   n.forward(inputs);
-  n.display(width,height,32);
+  translate(10,10);
+  n.display(width-20,height-20,25);
 }
 
 
