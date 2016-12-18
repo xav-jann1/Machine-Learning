@@ -22,7 +22,7 @@
     <script src="libraries/p5.js" type="text/javascript"></script>
 
     <script src="libraries/p5.dom.js" type="text/javascript"></script>
-    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+    <!-- <script src="libraries/p5.sound.js" type="text/javascript"></script> -->
 
     <script src="sketch.js" type="text/javascript"></script>
     <script src="NeuralNetworkObject.js" type="text/javascript"></script>
@@ -73,7 +73,7 @@
 
                             <div id="neural-parameters-layout">
 
-                                <div class="card-text">Fonction d'activation :</div>
+                                <div class="card-text">Fonction d'activation&#160;:</div>
                                 <select id="select-activation" class="select-box">
                                     <option value="id">Identité</option>
                                     <option value="sigmoid">Sigmoid</option>
@@ -81,7 +81,7 @@
                                     <option value="tanh">tanh</option>
                                 </select>
 
-                                <div class="card-text">Méthode d'apprentissage :</div>
+                                <div class="card-text">Méthode d'apprentissage&#160;:</div>
                                 <select id="select-learning" class="select-box">
                                     <option value="gradient">Gradient Descent</option>
                                     <option value="evolution">Evolution</option>
@@ -118,35 +118,94 @@
 
 
                 <div id="examples" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">
-                    <div class="card-title">Exemples</div>
+                    <div class="card-title">
+                        <span>Exemples</span>
+
+                        <span style="float:right; margin-right:4px">&#160;</span>
+                        <!-- TODO : Créer une class -->
+                        <button id="button-open" style="float:right; margin-right:4px" class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">folder_open</i>
+                        </button>
+                        <button id="button-newFile" style="float:right; margin-right:4px" class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">add</i>
+                        </button>
+                        <button id="button-code" style="float:right; margin-right:4px" class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">code</i>
+                        </button>
+
+                        <div class="mdl-tooltip" data-mdl-for="button-open">
+                            Ouvrir
+                        </div>
+                        <div class="mdl-tooltip" data-mdl-for="button-newFile">
+                            Nouveau
+                        </div>
+                        <div class="mdl-tooltip" data-mdl-for="button-code">
+                            Code source
+                        </div>
+
+                    </div>
+
+                    <div style="min-width:300px;" class="mdl-grid">
+                        <div style="height:310px; margin-top:-5px;" class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
+                            <div id="example-data" style="margin:10px 10px" class="">
+                                <div class="card-text">
+                                    <span class="">Titre :</span>
+                                    <span id="example-name"class=""></span>
+                                </div>
+
+                                <div class="card-text">
+                                    <span id="example-inputs-text" class="">Entrée :</span>
+                                    <span id="example-inputs"class=""></span>
+                                </div>
+
+                                <div class="card-text">
+                                    <span id="example-outputs-text" class="">Sortie :</span>
+                                    <span id="example-outputs"class=""></span>
+                                </div>
+
+                                <div class="card-text">
+                                    <span class="">Nombre d'exemples :</span>
+                                    <span id="example-nExamples" class=""></span>
+                                </div>
+
+                                <div class="card-text">
+                                    <span class="">Paramètres recommandés : </span>
+                                    <div style="margin-left:20px" class="">
+                                        <div class="">
+                                            <span class="">- Structure :</span>
+                                            <span id="example-structure" class=""></span>
+                                        </div>
+                                        <div class="">
+                                            <span class="">- Apprentissage :</span>
+                                            <span id="example-learning"class=""></span>
+                                        </div>
+                                        <div class="">
+                                            <span class="">- Taux :</span>
+                                            <span id="example-rate" class=""></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-text">
+                                    <span class="">Exemples :</span>
+                                    <span id="example-examples" class=""></span>
+                                </div>
 
 
-                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-                        <thead>
-                            <tr>
-                                <th class="mdl-data-table__cell--non-numeric">Name</th>
-                                <th>Quantity</th>
-                                <th>Source</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="mdl-data-table__cell--non-numeric">Add numbers</td>
-                                <td>25</td>
-                                <td class="mdl-data-table__cell--non-numeric">Me</td>
-                            </tr>
-                            <tr>
-                                <td class="mdl-data-table__cell--non-numeric">Houses prices</td>
-                                <td>50</td>
-                                <td class="mdl-data-table__cell--non-numeric">Me</td>
-                            </tr>
-                            <tr>
-                                <td class="mdl-data-table__cell--non-numeric">One more..</td>
-                                <td>10</td>
-                                <td class="mdl-data-table__cell--non-numeric">Me</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </div>
+
+                            <div id="example-code" style="display:none">
+                                <textArea id="example-code-text" cols=34 rows=15 style="font-family: courier"></textArea>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+
 
 
                 </div>
@@ -155,7 +214,7 @@
 
             <div style="height:550px" class="mdl-grid">
                 <div id="learn-graphs" class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
-                    <div class="card-title">Learn Graph</div>
+                    <div class="card-title">Apprentissage</div>
                 </div>
             </div>
 

@@ -1,11 +1,24 @@
 p5.disableFriendlyErrors = true;
 var n;
 var structureField;
-var button, answer
-var activation, learning;
-var bias;
+var activation, learning, bias;
+
+var exempleCode, exampleData;
+var buttonCode;
+var showCode = false;
+
+var button, answer;
+var exampleFile = "examples/sin.json";
+var example, exampleString;
+function preload(){
+  example = loadJSON(exampleFile, loadExample);
+  exampleString = loadStrings(exampleFile);
+}
+
+
 function setup() {
 
+  // Neural Network:
   var canvas = createCanvas(250, 250);
   canvas.parent('p5-graph');
 
@@ -17,6 +30,32 @@ function setup() {
   displayNewNetwork([2,3,1], bias.checked());
   structureField.input(newFieldNeuralStructure);
 
+  activation = select("#select-activation");
+  learning = select("#select-learning");
+
+
+  //Example:
+  exampleCode = select("#example-code");
+  exampleData = select("#example-data");
+  buttonCode = select("#button-code");
+  buttonCode.mousePressed( function(){
+    showCode = !showCode;
+    if(showCode){
+      exampleCode.style("display:block");
+      exampleData.style("display:none");
+
+      select("#example-code-text").value(join(exampleString, "\n"));
+
+
+    }else{
+      exampleCode.style("display:none");
+      exampleData.style("display:block");
+    }
+  });
+
+
+
+
 
   //button = select("#sendButton");
   //button.mousePressed(sendData);
@@ -24,8 +63,7 @@ function setup() {
   //answer = select("#answer");
   //answer.html(6);
 
-  activation = select("#select-activation");
-  learning = select("#select-learning");
+
 
 
   /*
@@ -37,13 +75,38 @@ function setup() {
 
 }
 
+function toOneString(array){
+  var string = "";
+  for(var i=0; i<array.length; i++) string += array[i];
+  return string;
+}
+
 function newExample(){
   console.log(example.value());
   //loadExample(example.value());
 }
 
-function loadExample(example){
+function loadExample(data){
 
+  select("#example-name").html(data.name);
+
+  select("#example-inputs").html(data.inputsName);
+  select("#example-outputs").html(data.outputsName);
+
+  if(data.inputsName.length==1)select("#example-inputs-text").html("Entrée :");
+    else select("#example-inputs-text").html("Entrées :");
+  if(data.outputsName.length==1)select("#example-outputs-text").html("Sortie :");
+    else select("#example-outputs-text").html("Sorties :");
+
+  select("#example-nExamples").html(data.examples.length);
+
+  select("#example-structure").html(data.recommandedParameters[0]);
+  select("#example-learning").html(data.recommandedParameters[1]);
+  select("#example-rate").html(data.recommandedParameters[2]);
+
+
+  // TODO : Adapter l'affichage pour les exemples
+  //select("#example-examples").html(data.examples);
 
 }
 

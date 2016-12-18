@@ -80,13 +80,13 @@ html *
 
 #examples {
   min-height: 278px;
-  background-color: #EEE
+  background-color: #EEE;
 
 
 }
 
 #learn-graphs{
-  background-color: #EEE
+  /*background-color: #EEE;*/
 }
 
 .separator {
