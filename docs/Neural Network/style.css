@@ -85,6 +85,26 @@ html *
 
 }
 
+#example-grid {
+  height: 310px; 
+  margin-top:-5px;
+  background-color:#FAFAFA
+
+}
+
+#example-drop-text {
+  display: none;
+
+  float: right;
+
+  position: relative;
+  right: 10px;
+  top: 6px;
+
+  font-weight: 200;
+  font-size: 14px;
+}
+
 #learn-graphs{
   /*background-color: #EEE;*/
 }

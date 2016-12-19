@@ -117,7 +117,7 @@
                 </div>
 
 
-                <div id="examples" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">
+                <div id="example" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">
                     <div class="card-title">
                         <span>Exemples</span>
 
@@ -127,11 +127,13 @@
                             <i class="material-icons">folder_open</i>
                         </button>
                         <button id="button-newFile" style="float:right; margin-right:4px" class="mdl-button mdl-js-button mdl-button--icon">
-                            <i class="material-icons">add</i>
+                            <i id="icon-example-add" class="material-icons">add</i>
                         </button>
                         <button id="button-code" style="float:right; margin-right:4px" class="mdl-button mdl-js-button mdl-button--icon">
                             <i class="material-icons">code</i>
                         </button>
+
+                        <span id="example-drop-text" >Charger l'exemple</span>
 
                         <div class="mdl-tooltip" data-mdl-for="button-open">Ouvrir</div>
                         <div class="mdl-tooltip" data-mdl-for="button-newFile">Nouveau</div>
@@ -140,7 +142,7 @@
                     </div>
 
                     <div style="min-width:300px;" class="mdl-grid">
-                        <div style="height:310px; margin-top:-5px; background-color:#FAFAFA" class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
+                        <div id="example-grid" class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
                             <div id="example-data" style="margin:10px 10px" class="">
                                 <div class="card-text">
                                     <span class="">Titre :</span>
@@ -231,6 +233,12 @@
 
     </div>
 
+
+    <div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button type="button" class="mdl-snackbar__action"></button>
+    </div>
+    
 </body>
 
 
