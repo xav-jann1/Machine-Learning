@@ -1,0 +1,16 @@
+{
+  "name": "empty",
+  "inputsName" : [""],
+  "outputsName" : [""],
+  "recommanded":{
+    "structure": "",
+    "activation": "",
+    "rate": 0,
+    "bias": "false"
+  },
+
+  "examples":[
+    [ [], [] ]
+  ]
+
+}

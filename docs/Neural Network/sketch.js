@@ -10,6 +10,7 @@ var showCode = false;
 var button, answer;
 
 var exampleFile = "examples/sin.json";
+var emptyFile = "examples/empty.json";
 var exampleText;
 function preload(){
   // Eviter d'utliser preload : appartion de texte dans structureField
@@ -37,38 +38,42 @@ function setup() {
 
 
   //Example:
-
   // TODO : Créer une fonction pour ouvrir un exemple
-  exampleText = loadStrings(exampleFile, function(){  //Chargement de l'exemple
-    exampleText = join(exampleText, "\n");
-    loadExample(exampleText);
-  });
+  loadExample(exampleFile);
 
   exampleCode = select("#example-code");
   exampleData = select("#example-data");
   buttonCode = select("#button-code");
   buttonCode.mousePressed( function(){
     showCode = !showCode;
-    if(showCode){
+    if(showCode){ //Code
       exampleCode.style("display:block");
       exampleData.style("display:none");
 
       select("#example-code-text").value(exampleText);
-    }else{
+    }else{  //Data
       exampleCode.style("display:none");
       exampleData.style("display:block");
 
       exampleText = select("#example-code-text").value();
-      loadExample(exampleText);
+      loadExampleData(exampleText);
     }
   });
 
   //Save text :
   buttonSaveCode = select("#button-example-code-save");
-  buttonSaveCode.mousePressed( function(){
+  buttonSaveCode.mousePressed(function(){
     var code = select("#example-code-text").value();
     code = split(code, '\n');
     saveStrings(code,'sin.txt');
+  });
+
+  buttonNewExample = select("#button-newFile");
+  buttonNewExample.mousePressed(function(){
+    var answer = confirm("Créer un nouvel exemple ?");
+    if(answer) {
+      loadExample(emptyFile);
+    }
   });
 
 
@@ -95,8 +100,19 @@ function newExample(){
   //loadExample(example.value());
 }
 
-function loadExample(data){ //data : String
+function loadExample(file){
+  var text = loadStrings(file, function(){  //Chargement de l'exemple
+    text = join(text, "\n");
+    loadExampleData(text);
 
+    select("#example-code-text").value(text);
+
+    exampleText = text; // ~return
+  });
+}
+
+function loadExampleData(data){ //data : String
+  console.log("load data..");
   data = JSON.parse(data);  //String to JSON
 
   select("#example-name").html(data.name);
