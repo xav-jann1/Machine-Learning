@@ -4,15 +4,17 @@ var structureField;
 var activation, learning, bias;
 
 var exempleCode, exampleData;
-var buttonCode;
+var buttonCode, buttonSaveCode;
 var showCode = false;
 
 var button, answer;
+
 var exampleFile = "examples/sin.json";
-var example, exampleString;
+var exampleText;
 function preload(){
-  example = loadJSON(exampleFile, loadExample);
-  exampleString = loadStrings(exampleFile);
+  // Eviter d'utliser preload : appartion de texte dans structureField
+  //example = loadJSON(exampleFile, loadExample);
+  //exampleString = loadStrings(exampleFile);
 }
 
 
@@ -35,6 +37,13 @@ function setup() {
 
 
   //Example:
+
+  // TODO : Créer une fonction pour ouvrir un exemple
+  exampleText = loadStrings(exampleFile, function(){  //Chargement de l'exemple
+    exampleText = join(exampleText, "\n");
+    loadExample(exampleText);
+  });
+
   exampleCode = select("#example-code");
   exampleData = select("#example-data");
   buttonCode = select("#button-code");
@@ -44,16 +53,23 @@ function setup() {
       exampleCode.style("display:block");
       exampleData.style("display:none");
 
-      select("#example-code-text").value(join(exampleString, "\n"));
-
-
+      select("#example-code-text").value(exampleText);
     }else{
       exampleCode.style("display:none");
       exampleData.style("display:block");
+
+      exampleText = select("#example-code-text").value();
+      loadExample(exampleText);
     }
   });
 
-
+  //Save text :
+  buttonSaveCode = select("#button-example-code-save");
+  buttonSaveCode.mousePressed( function(){
+    var code = select("#example-code-text").value();
+    code = split(code, '\n');
+    saveStrings(code,'sin.txt');
+  });
 
 
 
@@ -62,8 +78,6 @@ function setup() {
 
   //answer = select("#answer");
   //answer.html(6);
-
-
 
 
   /*
@@ -75,18 +89,15 @@ function setup() {
 
 }
 
-function toOneString(array){
-  var string = "";
-  for(var i=0; i<array.length; i++) string += array[i];
-  return string;
-}
 
 function newExample(){
   console.log(example.value());
   //loadExample(example.value());
 }
 
-function loadExample(data){
+function loadExample(data){ //data : String
+
+  data = JSON.parse(data);  //String to JSON
 
   select("#example-name").html(data.name);
 
@@ -100,9 +111,10 @@ function loadExample(data){
 
   select("#example-nExamples").html(data.examples.length);
 
-  select("#example-structure").html(data.recommandedParameters[0]);
-  select("#example-learning").html(data.recommandedParameters[1]);
-  select("#example-rate").html(data.recommandedParameters[2]);
+  select("#example-structure").html(data.recommanded.structure);
+  select("#example-activation").html(data.recommanded.activation);
+  select("#example-rate").html(data.recommanded.rate);
+  select("#example-bias").html(data.recommanded.bias);
 
 
   // TODO : Adapter l'affichage pour les exemples

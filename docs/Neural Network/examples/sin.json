@@ -2,7 +2,12 @@
   "name": "sin",
   "inputsName" : ["x"],
   "outputsName" : ["sin(x)"],
-  "recommandedParameters":["1 2 1", "tanh", 0.1],
+  "recommanded":{
+    "structure": "1 2 1",
+    "activation":"tanh",
+    "rate": 0.1,
+    "bias": false
+  },
 
   "examples":[
     [ [0], [0] ],
