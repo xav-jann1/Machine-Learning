@@ -133,15 +133,9 @@
                             <i class="material-icons">code</i>
                         </button>
 
-                        <div class="mdl-tooltip" data-mdl-for="button-open">
-                            Ouvrir
-                        </div>
-                        <div class="mdl-tooltip" data-mdl-for="button-newFile">
-                            Nouveau
-                        </div>
-                        <div class="mdl-tooltip" data-mdl-for="button-code">
-                            Code source
-                        </div>
+                        <div class="mdl-tooltip" data-mdl-for="button-open">Ouvrir</div>
+                        <div class="mdl-tooltip" data-mdl-for="button-newFile">Nouveau</div>
+                        <div class="mdl-tooltip" data-mdl-for="button-code">Code source</div>
 
                     </div>
 
@@ -200,14 +194,16 @@
                             </div>
 
                             <div id="example-code" style="display:none">
-                                <div class="card-title">
-                                    Code source
-                                </div>
+                                <span>
+                                    <span style="position: relative; top: 2px" class="card-title">Code source</span>
+                                    <button id="button-example-code-save" style="float:right; margin-right:4px; margin-top:-5px; margin-bottom:2px;" class="mdl-button mdl-js-button mdl-button--icon">
+                                        <i style="color: #999" class="material-icons">file_download</i>
+                                    </button>
+                                    <div class="mdl-tooltip" data-mdl-for="button-example-code-save">Télécharger l'exemple</div>
+                                </span>
+
                                 <textArea id="example-code-text" cols=34 rows=15 style="font-family: courier"></textArea>
-                                <!-- TODO : Metttre le bouton en haut à gauche de textArea -->
-                                <button id="button-example-code-save" style="float:right; margin-right:4px" class="mdl-button mdl-js-button mdl-button--icon">
-                                    <i style="color: #999" class="material-icons">save</i>
-                                </button>
+
                             </div>
 
 

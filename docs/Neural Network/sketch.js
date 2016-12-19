@@ -64,8 +64,9 @@ function setup() {
   buttonSaveCode = select("#button-example-code-save");
   buttonSaveCode.mousePressed(function(){
     var code = select("#example-code-text").value();
+    var filename = JSON.parse(code).name;
     code = split(code, '\n');
-    saveStrings(code,'sin.txt');
+    saveStrings(code, filename, "json");
   });
 
   buttonNewExample = select("#button-newFile");
@@ -112,7 +113,7 @@ function loadExample(file){
 }
 
 function loadExampleData(data){ //data : String
-  console.log("load data..");
+
   data = JSON.parse(data);  //String to JSON
 
   select("#example-name").html(data.name);
