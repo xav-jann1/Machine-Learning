@@ -24,8 +24,8 @@ function setup() {
   //learningSetup();
 
 
-  var button = select('#sendButton');
-  button.mousePressed(newLearning);
+  /*var button = select('#sendButton');
+  button.mousePressed(newLearning);*/
 
   //var answer = select('#answer');
   //answer.html(6);
