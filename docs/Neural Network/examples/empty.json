@@ -6,7 +6,7 @@
     "structure": "",
     "activation": "",
     "rate": 0,
-    "bias": "false"
+    "bias": false
   },
 
   "examples":[

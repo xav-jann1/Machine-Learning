@@ -8,8 +8,6 @@ var exampleFile = "examples/sin.json";
 var emptyFile = "examples/empty.json";
 var exampleText;
 
-var button, answer;
-
 function preload(){
   // Eviter d'utliser preload : appartion de texte dans structureField
   //example = loadJSON(exampleFile, loadExample);
@@ -26,34 +24,44 @@ function setup() {
   //learningSetup();
 
 
-  //button = select('#sendButton');
-  //button.mousePressed(sendData);
+  var button = select('#sendButton');
+  button.mousePressed(newLearning);
 
-  //answer = select('#answer');
+  //var answer = select('#answer');
   //answer.html(6);
 
 
 }
 
 
-function sendData(){
-  console.log('Sending data ...');
+function newLearning(){
+
+  console.log('Sending data...');
+
+  var exampleText = select('#example-code-text').value(); //Récupère les données de l'exemple
+  var exampleData = JSON.parse(exampleText);
 
   var data = {
-    data: textToNumbers(structureField.value())  // TODO: Ajouter vérification
-  };
+    name: exampleData.name,
+    structure: textToNumbers(select("#neural-structure-field-value").value()),
+    activation: select("#select-activation").value(),
+    //rate: select("#"),
+    bias: select('#checkbox-1').checked(),
+
+    examples: exampleData.examples
+
+  }
+
   console.log(data);
 
-  httpPost('/computePython',data,'json', dataPosted, postError);  //Envoie de la demande au serveur
-}
+  httpPost('/neural-network',data,'json', function(result){
+    //Server answer:
+    console.log(result);
 
-function dataPosted(result){  //Réponse du serveur
-  console.log(result.sum);
-  //answer.html(result.sum);
-}
+  }, function(error){
+    console.log(error);
+  });
 
-function postError(error){
-  console.log(error);
 }
 
 

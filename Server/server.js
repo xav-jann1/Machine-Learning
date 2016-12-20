@@ -34,3 +34,46 @@ app.post('/computePython', function(request, response){
   });
 
 });
+
+
+app.post('/neural-network', function(request, response){
+
+  var data = request.body['data[]'];
+  console.log('loading data..');
+
+  //var process = spawn('python',["add data.py",data]); //Lance le program python avec data en paramètre
+/*
+  var sum = 0;
+  var reply = {
+    answer: 'Message send !',
+    sum: sum
+  };
+
+  process.stdout.on('data', function (data){
+    sum = data.toString();
+    console.log(sum);
+    reply.sum = sum;  // TODO: Enlever le saut de ligne
+    response.send(reply); //Envoie la réponse
+  });*/
+
+  var reply = {
+    /*
+    answer: 'Message send !',
+    sum: 10, */
+
+    iteration: 1, //Nombre de fois que la boucle s'est éxécuté
+    cost: 10,
+
+    weights: [], //Tous les poids du réseau
+
+    examplesForward: []  //Réponse pour chaque exemple
+
+
+
+  };
+
+  response.send(reply);
+
+
+
+});

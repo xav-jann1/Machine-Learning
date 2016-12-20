@@ -93,17 +93,6 @@
                                     <span style="font-size: 14px" class="mdl-checkbox__label">Bias</span>
                                 </label>
 
-                                <!--
-                                <span>
-                                    <button id="sendButton" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-                                        <i class="material-icons">send</i>
-                                    </button>
-                                    <span style="margin-left:10px;" id="answer">56</span>
-                                </span>
-                                -->
-
-
-
                             </div>
 
                         </div>
@@ -120,7 +109,7 @@
 
                 <div id="example" class="mdl-cell mdl-cell--5-col mdl-shadow--2dp">
                     <div class="card-title">
-                        <span>Exemples</span>
+                        <span style="position:relative; top:5px; left:4px">Exemple</span>
 
                         <span style="float:right; margin-right:4px">&#160;</span>
                         <!-- TODO : Créer une class -->
@@ -143,53 +132,56 @@
                     </div>
 
                     <div style="min-width:300px;" class="mdl-grid">
-                        <div id="example-grid" class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
+                        <div id="example-grid" class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
                             <div id="example-data" style="margin:10px 10px" class="">
-                                <div class="card-text">
-                                    <span class="">Titre :</span>
-                                    <span id="example-name"class=""></span>
+
+                                <div style="margin-left:-1px; margin-top:-1px" class="card-title">Données :</div>
+
+                                <div class="example-data">
+                                    <span class="example-data-title">Nom :</span>
+                                    <span id="example-name" class="example-data-data"></span>
                                 </div>
 
-                                <div class="card-text">
-                                    <span id="example-inputs-text" class="">Entrée :</span>
-                                    <span id="example-inputs"class=""></span>
+                                <div class="example-data">
+                                    <span id="example-inputs-text" class="example-data-title">Entrée :</span>
+                                    <span id="example-inputs" class="example-data-data"></span>
                                 </div>
 
-                                <div class="card-text">
-                                    <span id="example-outputs-text" class="">Sortie :</span>
-                                    <span id="example-outputs"class=""></span>
+                                <div class="example-data">
+                                    <span id="example-outputs-text" class="example-data-title">Sortie :</span>
+                                    <span id="example-outputs" class="example-data-data"></span>
                                 </div>
 
-                                <div class="card-text">
-                                    <span class="">Nombre d'exemples :</span>
-                                    <span id="example-nExamples" class=""></span>
+                                <div class="example-data">
+                                    <span class="example-data-title">Nombre d'exemples :</span>
+                                    <span id="example-nExamples" class="example-data-data"></span>
                                 </div>
 
-                                <div class="card-text">
-                                    <span class="">Paramètres recommandés : </span>
+                                <div class="example-data">
+                                    <span class="example-data-title">Paramètres recommandés : </span>
                                     <div style="margin-left:20px" class="">
                                         <div class="">
-                                            <span class="">- Structure :</span>
-                                            <span id="example-structure" class=""></span>
+                                            <span class="example-data-title">- Structure :</span>
+                                            <span id="example-structure" class="example-data-data"></span>
                                         </div>
                                         <div class="">
-                                            <span class="">- Apprentissage :</span>
-                                            <span id="example-activation"class=""></span>
+                                            <span class="example-data-title">- Activation :</span>
+                                            <span id="example-activation"class="example-data-data"></span>
                                         </div>
                                         <div class="">
-                                            <span class="">- Taux :</span>
-                                            <span id="example-rate" class=""></span>
+                                            <span class="example-data-title">- Taux :</span>
+                                            <span id="example-rate" class="example-data-data"></span>
                                         </div>
                                         <div class="">
-                                            <span class="">- Bias :</span>
-                                            <span id="example-bias" class=""></span>
+                                            <span class="example-data-title">- Bias :</span>
+                                            <span id="example-bias" class="example-data-data"></span>
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div class="card-text">
-                                    <span class="">Exemples :</span>
+                                <div class="example-data">
+                                    <span class="example-data-title">Exemples :</span>
                                     <span id="example-examples" class=""></span>
                                 </div>
 
@@ -197,15 +189,15 @@
                             </div>
 
                             <div id="example-code" style="display:none">
-                                <span>
-                                    <span style="position: relative; top: 2px" class="card-title">Code source</span>
-                                    <button id="button-example-code-save" style="float:right; margin-right:4px; margin-top:-5px; margin-bottom:2px;" class="mdl-button mdl-js-button mdl-button--icon">
+                                <div style="margin-right: 20px;">
+                                    <span style="  position: relative; top: 9px; left: 2px;" class="card-title">Code source :</span>
+                                    <button id="button-example-code-save" style="float:right; margin-right:-10px; margin-top:2px; margin-bottom:2px;" class="mdl-button mdl-js-button mdl-button--icon">
                                         <i style="color: #999" class="material-icons">file_download</i>
                                     </button>
                                     <div class="mdl-tooltip" data-mdl-for="button-example-code-save">Télécharger l'exemple</div>
-                                </span>
+                                </div>
 
-                                <textArea id="example-code-text" cols=34 rows=15 style="font-family: courier"></textArea>
+                                <textArea id="example-code-text" rows=18 style="font-family: Inconsolata; font-size:10pt; margin-left: 14px;  width: 89%;"></textArea>
 
                             </div>
 
@@ -225,6 +217,21 @@
             <div style="height:550px" class="mdl-grid">
                 <div id="learn-graphs" class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
                     <div class="card-title">Apprentissage</div>
+
+
+                    <!--span>
+                        <button id="sendButton" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                            <i class="material-icons">send</i>
+                        </button>
+                        <span style="margin-left:10px;" id="answer">56</span>
+                    </span-->
+
+
+
+
+
+
+
                 </div>
             </div>
 
