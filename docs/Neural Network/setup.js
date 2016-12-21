@@ -3,7 +3,7 @@
 function neuralNetworkSetup(){
 
   var canvas = createCanvas(250, 250);
-  canvas.parent('p5-graph');
+  canvas.parent('#p5-graph');
 
   var bias = select('#checkbox-1');
   bias.changed(newFieldNeuralStructure);
@@ -79,7 +79,7 @@ function exampleSetup(){
     select('#example-drop-text').style('display: block');
   });
   dropzone.dragLeave(unhighlight);
-  
+
   function unhighlight(){
     select('#icon-example-add').html("add");
     dropzone.style('background-color: ');
