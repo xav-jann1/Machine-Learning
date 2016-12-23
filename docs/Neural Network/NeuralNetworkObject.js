@@ -12,9 +12,9 @@ function Neuron(nInputs) {
       this.sum += inputs[i] * this.weights[i];
     this.output = this.sum;
     return this.sum;
-  }
+  };
 
-  this.getAnswer = function() { return this.sum; }
+  this.getAnswer = function() { return this.sum; };
 
 }
 
@@ -29,11 +29,11 @@ function Layer(nNeurons, nInputs) {
       outputs.push(this.neurons[neuron].forward(inputs));
     }
     return outputs;
-  }
+  };
 
-  this.nNeurons = function(){ return this.neurons.length; }
+  this.nNeurons = function(){ return this.neurons.length; };
 
-  this.getAnswer = function(n){ return this.neurons[n].getAnswer(); }
+  this.getAnswer = function(n){ return this.neurons[n].getAnswer(); };
 
 }
 
@@ -63,7 +63,7 @@ function Network(layers, bias) {
     }
 
     return layerInputs;
-  }
+  };
 
 
   this.display = function(w,h,rC){
@@ -72,7 +72,7 @@ function Network(layers, bias) {
     translate(rC/2 + w/2, rC/2 + h/2);  //Enlève l'espace occupé par les rayons des cercles et centre au milieu
 
     //Ajout des couches :
-    var neuronsInLayer = [this.inputs.length-1]; //inputs.length-1};
+    var neuronsInLayer = [this.inputs.length-1]; //inputs.length-1;
 
     for(var l=0; l<this.layers.length; l++) neuronsInLayer.push(this.layers[l].nNeurons()-1);
     if(bias) for(var i=0; i<neuronsInLayer.length-1; i++) neuronsInLayer[i]++;  //Ajoute un neurone pour chaque couche sauf la dernière
@@ -125,7 +125,7 @@ function Network(layers, bias) {
 
     }
 
-  }
+  };
 
 
 

@@ -9,6 +9,7 @@ var d = function(c){
 
     c.noStroke();
     c.background(100);
+
   };
 
   c.mouseDragged = function(){  //Dessin de l'utilisateur
@@ -18,9 +19,10 @@ var d = function(c){
   };
 
   c.mouseReleased = function(){
-    p5nd.img(c.get());  //Déclanche l'affichage de l'image pixelisé
+    p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé
 
   };
+
 
 };
 var myp5 = new p5(d,'draw');
@@ -37,21 +39,40 @@ var nd = function(c){
 
     c.noStroke();
     c.background(100);
+
+    var button = c.createButton("tap")//.mousePressed(conv);
+    button.mousePressed(function(){ //Test sur l'image
+
+      var net = new ConvNet();
+
+      net.addLayer('conv', 3, 3);
+      net.addLayer('relu', 200);
+      //net.addLayer('conv',3,3);
+
+      console.log(net.forward(c.imgToArray(c.pixelImage)));
+
+    });
   };
 
-  c.img = function(image){
+  c.pixelImage;
 
+  c.imgToArray = function(image){
+    var array = [];
+    var width = image.width;
+    image.loadPixels();
+    for(var i=0; i<width*width; i++) array.push(image.pixels[i*4]);
+    return array;
+  }
+
+
+  c.img = function(image){
     var pixel = c.norm(image);  //Récupère l'image pixelisée
 
-    var l = image.width/28; //Dimension d'un pixel
+    var l = image.width/28;  //Dimension d'un pixel
+    c.showImage(pixel, l);  //Affichage de l'image dans le canvas
 
-    c.showImage(pixel, l);
-
-    console.log(pixel);
-
-
-    //c.image(pixel, 0, 0, c.width, c.height);
-
+    c.pixelImage = pixel; //Enregistre l'image
+    //console.log(pixel);
   };
 
   c.showImage = function(image, l){
@@ -67,9 +88,9 @@ var nd = function(c){
         c.rect(x*l,y*l,l,l);
       }
     }
-  }
+  };
 
-  c.norm = function(image){
+  c.norm = function(image){  //Normalise une image (28x28 px)
 
     var newImage = c.createImage(28, 28);
     newImage.loadPixels();
