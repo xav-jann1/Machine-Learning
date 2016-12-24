@@ -53,6 +53,7 @@ function exampleSetup(){
     var answer = confirm("Créer un nouvel exemple ?");
     if(answer) {
       loadExampleFile(emptyFile);
+      showToast('Nouvel exemple');
     }
   });
 
@@ -66,11 +67,8 @@ function exampleSetup(){
 
     loadExampleText(decode);
 
-    //Toast:
-    var notification = document.querySelector('.mdl-js-snackbar');
-    notification.MaterialSnackbar.showSnackbar({
-      message: 'Exemple chargé : ' + data.name
-    });
+    showToast('Exemple chargé : ' + data.name);
+
   }, unhighlight);
   dropzone.dragOver(function(){
     select('#icon-example-add').html("file_upload");
@@ -177,5 +175,17 @@ function loadExampleData(data){ //data : String
 
   // TODO : Adapter l'affichage pour les exemples
   //select('#example-examples').html(data.examples);
+
+}
+
+
+
+function showToast(text){
+  //Toast:
+  var notification = document.querySelector('.mdl-js-snackbar');
+  notification.MaterialSnackbar.showSnackbar({
+    message: text
+  });
+
 
 }
