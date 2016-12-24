@@ -13,7 +13,7 @@ var d = function(c){
   };
 
   c.mouseDragged = function(){  //Dessin de l'utilisateur
-    c.fill(255);
+    c.fill(250);
     c.ellipse(c.touchX,c.touchY,40,40);
 
   };
@@ -45,9 +45,11 @@ var nd = function(c){
 
       var net = new ConvNet();
 
-      net.addLayer('conv', 3, 3);
-      net.addLayer('relu', 200);
-      //net.addLayer('conv',3,3);
+      /*
+      net.addLayer('conv', 1, 3);
+      net.addLayer('pool', 2);
+      net.addLayer('relu', 40);
+      */
 
       console.log(net.forward(c.imgToArray(c.pixelImage)));
 
@@ -73,6 +75,7 @@ var nd = function(c){
 
     c.pixelImage = pixel; //Enregistre l'image
     //console.log(pixel);
+
   };
 
   c.showImage = function(image, l){
