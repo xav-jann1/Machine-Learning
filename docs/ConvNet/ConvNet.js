@@ -41,7 +41,7 @@ function ConvNet(){
 
         if(layer.type=='conv'){  //'conv' renvoie un tableau d'image
           images[i] = output[0];
-          for(var e=1; e<image.length; e++) images.push(output[e]);
+          for(var e=1; e<output.length; e++) images.push(output[e]);
         }else images[i] = output;
 
       }
@@ -97,18 +97,6 @@ var conv = {
   filters : [ [] ]
 };
 
-/*var pool = {
-  type: 'pool',
-  width: 2,
-  take: 'max' // ou 'min'
-};*/
-/*
-var relu = {
-  type: 'relu',
-  min: 0
-};*/
-
-
 
 function convolution(conv, image){
 
@@ -135,7 +123,6 @@ function convolution(conv, image){
 function imageConv(imageFilter){  // Calcul de l'image filtrée
 
   var iWidth = imageFilter.iWidth;
-  var fWidth = imageFilter.fWidth;
   var padding = imageFilter.padding;
 
   var newImage = [];
@@ -163,14 +150,15 @@ function filterValue(x, y, imageFilter){  //Calcul de la valeur d'un pixel
   for(var i=-padding; i<=padding; i++){
     for(var j=-padding; j<=padding; j++){
       var index = (x+j) + (y+i)*iWidth;
-      sum += image[index] * filter[(j+padding) + (i+padding)*fWidth];
+      var fIndex = (j+padding) + (i+padding)*fWidth
+      sum += image[index] * filter[fIndex];
     }
   }
 
   //var sumFilter = filter.reduce((pv, cv) => Math.abs(pv)+Math.abs(cv), 0);  //Somme des poids du filtre
   sum /= sumFilter;
 
-  // TODO : Vérifiez s'il est nécessaire contraindre les valeurs
+  // TODO : Vérifier s'il est nécessaire de contraindre les valeurs
   if(sum<0) sum = 0;
   if(sum>255) sum = 255;
 

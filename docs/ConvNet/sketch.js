@@ -40,7 +40,7 @@ var nd = function(c){
     c.noStroke();
     c.background(100);
 
-    var button = c.createButton("tap")//.mousePressed(conv);
+    var button = c.createButton("send")//.mousePressed(conv);
     button.mousePressed(function(){ //Test sur l'image
 
       var net = new ConvNet();
@@ -50,11 +50,31 @@ var nd = function(c){
       net.addLayer('pool', 2);
       net.addLayer('relu', 40);
       */
+      sendImage(c.imgToArray(c.pixelImage));
 
-      console.log(net.forward(c.imgToArray(c.pixelImage)));
+      //console.log(net.forward(c.imgToArray(c.pixelImage)));
 
     });
   };
+
+  function sendImage(image){  //Image = Array
+    console.log('Sending data...');
+
+    var data = {
+      image: image
+
+      //layers:
+
+    }
+    console.log(data);
+
+    c.httpPost('/convnet', data, 'json', function(result){
+      //Server answer:
+      console.log(result);
+
+    }, function(error){ console.log(error); });
+
+  }
 
   c.pixelImage;
 
