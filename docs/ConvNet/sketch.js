@@ -19,8 +19,7 @@ var d = function(c){
   };
 
   c.mouseReleased = function(){
-    p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé
-
+    p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé 
   };
 
 

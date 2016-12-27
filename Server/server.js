@@ -5,7 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var app = express();
-var server = app.listen(3010);
+var server = app.listen(80);
 
 app.use(express.static('../docs'));
 app.use(bodyParser.urlencoded({extended: false}));
