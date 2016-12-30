@@ -165,6 +165,24 @@ def relu(relu, image):
 
 
 
+def JSONstringify(dico):
+    t = '{ '
+    for key, value in zip(dico.keys(),dico.values()):
+        t += '"' + key + '"' + ': ' + str(value) + ', '
+
+    t = t[:-2]  #Enlève la dernière virgule
+    t += ' }'
+
+    return t
+
+def stringToArray(s):
+    a = []
+    n = s.split(',')
+    for i in n:
+        a.append(int(i))
+    return a
+
+
 """
 net = ConvNet()
 
@@ -178,11 +196,18 @@ image = [2,0,2,6,4,8,5,4,2,12,8,45,12,54,5,4]
 print(net.forward(image))
 
 """
+
+
 numbers = []
-s = sys.argv[1]
+s = sys.argv[1]  #Get 1st parameter
+
+s = stringToArray(s)  #Create the array from the text
 
 numbers.append(s)
 numbers.append(s)
 
-print(numbers)
+d = {}
+d['tab'] = numbers
+
+print(JSONstringify(d))  #Send data in JSON format
 sys.stdout.flush()
