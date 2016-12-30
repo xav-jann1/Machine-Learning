@@ -81,7 +81,7 @@ app.post('/convnet', function(request, response){
   //console.log(image);
 
   //Lance le program python avec image en paramètre:
-  var process = spawn('python',["ConvNet.py", data/*, layers*/]);
+  var process = spawn('python',["ConvNet.py", image/*, layers*/]);
 
   var reply = {};
   //Traite la réponse reçue par le programme python:
