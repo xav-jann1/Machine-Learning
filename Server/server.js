@@ -61,10 +61,10 @@ app.post('/neural-network', function(request, response){
     answer: 'Message send !',
     sum: 10, */
 
-    iteration: 1, //Nombre de fois que la boucle s'est éxécuté
+    iteration: 1,  //Nombre de fois que la boucle s'est éxécuté
     cost: 10,
 
-    weights: [], //Tous les poids du réseau
+    weights: [],  //Tous les poids du réseau
 
     examplesForward: []  //Réponse pour chaque exemple
 
@@ -77,24 +77,23 @@ app.post('/neural-network', function(request, response){
 
 // Convolutional Neural Network answer :
 app.post('/convnet', function(request, response){
-
-  var data = request.body['image[]'];
-  console.log('loading data..');
-  console.log(Number(data[0])+2);
-
-  image = arrayStringToInt(data);
-
+  var image = request.body['image[]'];
   //console.log(image);
 
-  var process = spawn('python',["ConvNet.py", image/*, layers*/]); //Lance le program python avec data en paramètre
+  //Lance le program python avec image en paramètre:
+  var process = spawn('python',["ConvNet.py", data/*, layers*/]);
 
   var reply = {};
+  //Traite la réponse reçue par le programme python:
   process.stdout.on('data', function (data){
-    var answer = data.toString();
+    console.log('answer:')
+    var answer = data.toString();  //hex to ASCII
     console.log(answer);
-    reply.answer = answer;  // TODO: Enlever le saut de ligne
+    answer = JSON.parse(answer);  //ASCII to Object
+    reply.answer = answer;
     response.send(reply); //Envoie la réponse
   });
+
 /*
   var reply = {
     image: image,
@@ -103,10 +102,3 @@ app.post('/convnet', function(request, response){
 */
 
 });
-
-
-function arrayStringToInt(array){
-  newArray = [];
-  for(var i=0; i<array.length; i++) newArray.push(Number(array[i]));
-  return newArray;
-}
