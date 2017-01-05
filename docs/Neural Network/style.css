@@ -91,9 +91,16 @@ html *
 
 }
 
+#neural-parameters {
+
+  background-color: #FAFAFA;
+
+}
+
 
 #neural-parameters-layout {
   margin: 6px 20px;
+  //background-color: #FAFAFA;
 
 }
 
