@@ -10,6 +10,11 @@ var d = function(c){
     c.noStroke();
     c.background(100);
 
+    var buttonClear = c.createButton("clear")//.mousePressed(conv);
+    buttonClear.mousePressed(function(){ //Test sur l'image
+      c.background(100);
+    });
+
   };
 
   c.mouseDragged = function(){  //Dessin de l'utilisateur
@@ -19,8 +24,10 @@ var d = function(c){
   };
 
   c.mouseReleased = function(){
-    p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé 
+    p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé
   };
+
+
 
 
 };
@@ -39,19 +46,29 @@ var nd = function(c){
     c.noStroke();
     c.background(100);
 
+
+
     var button = c.createButton("send")//.mousePressed(conv);
     button.mousePressed(function(){ //Test sur l'image
 
       var net = new ConvNet();
-
-      /*
-      net.addLayer('conv', 1, 3);
+      //*
+      net.addLayer('conv', 5, 5);
       net.addLayer('pool', 2);
-      net.addLayer('relu', 40);
-      */
-      sendImage(c.imgToArray(c.pixelImage));
+      net.addLayer('conv', 2, 3);
+      net.addLayer('conv', 2, 3);
+      net.addLayer('pool', 2);
+      net.addLayer('pool', 2);
 
-      //console.log(net.forward(c.imgToArray(c.pixelImage)));
+      net.addLayer('relu', 50);
+
+      net.addLayer('fc');
+      
+      //*/
+
+      //sendImage(c.imgToArray(c.pixelImage));
+
+      console.log(net.forward(c.imgToArray(c.pixelImage)));
 
     });
   };

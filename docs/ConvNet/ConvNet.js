@@ -36,13 +36,28 @@ function ConvNet(){
 
       console.log('layer', l, '-', layer.type);
 
-      for(var i=0; i<nImages; i++){
-        var output = this.goToNextLayer(layer, images[i]);
+      if(layer.type != 'fc'){
 
-        if(layer.type=='conv'){  //'conv' renvoie un tableau d'image
-          images[i] = output[0];
-          for(var e=1; e<output.length; e++) images.push(output[e]);
-        }else images[i] = output;
+        for(var i=0; i<nImages; i++){
+          var output = this.goToNextLayer(layer, images[i]);
+
+          if(layer.type=='conv'){  //'conv' renvoie un tableau d'image
+            images[i] = output[0];
+            for(var e=1; e<output.length; e++) images.push(output[e]);
+          }else images[i] = output;
+        }
+
+      }else{
+        var newImage = [];
+
+        for(var i=0; i<nImages; i++){
+          for(var value=0; value<images[i].length; value++){
+            newImage.push(images[i][value]);
+          }
+
+        }
+
+        images = newImage;
 
       }
     }
@@ -62,6 +77,9 @@ function ConvNet(){
 
       case 'relu':
         return relu(layer, image);
+
+      case 'fc':
+        return fc(layer,image);
 
       default:
         console.log('error !!! : no layer');
@@ -112,7 +130,7 @@ function convolution(conv, image){
     var filter = conv.filters[f];
     imageFilter.filter = filter;
     imageFilter.sumFilter = sumArray(filter);
-    console.log(imageFilter);
+    //console.log(imageFilter);
     var newImage = imageConv(imageFilter);
     images.push(newImage);
   }
@@ -209,4 +227,9 @@ function relu(relu, image){
   }
 
   return image;
+}
+
+function fc(fc, image){
+
+
 }
