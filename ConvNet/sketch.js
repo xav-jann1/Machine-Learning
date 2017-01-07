@@ -52,7 +52,7 @@ var nd = function(c){
     button.mousePressed(function(){ //Test sur l'image
 
       var net = new ConvNet();
-      //*
+      /*
       net.addLayer('conv', 5, 5);
       net.addLayer('pool', 2);
       net.addLayer('conv', 2, 3);
@@ -63,12 +63,12 @@ var nd = function(c){
       net.addLayer('relu', 50);
 
       net.addLayer('fc');
-      
+
       //*/
 
-      //sendImage(c.imgToArray(c.pixelImage));
+      sendImage(c.imgToArray(c.pixelImage));
 
-      console.log(net.forward(c.imgToArray(c.pixelImage)));
+      //console.log(net.forward(c.imgToArray(c.pixelImage)));
 
     });
   };

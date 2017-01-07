@@ -24,8 +24,8 @@ function setup() {
   //learningSetup();
 
 
-  /*var button = select('#sendButton');
-  button.mousePressed(newLearning);*/
+  var button = select('#sendButton');
+  button.mousePressed(newLearning); //*/
 
   //var answer = select('#answer');
   //answer.html(6);
@@ -50,11 +50,12 @@ function newLearning(){
 
     examples: exampleData.examples
 
-  }
+  };
 
-  console.log(data);
+  console.log(data.structure);
 
-  httpPost('/neural-network',data,'json', function(result){
+  //httpPost('/neural-network', data, 'json', function(result){
+  httpPost('/computePython', data.structure, 'json', function(result){
     //Server answer:
     console.log(result);
 
