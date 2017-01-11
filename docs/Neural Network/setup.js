@@ -94,7 +94,6 @@ function exampleSetup(){
 function newFieldNeuralStructure(){
   var structureField = select('#neural-structure-field-value');
   var bias = select('#checkbox-1');
-  console.log(bias);
 
   var text = structureField.value();
   numbers = textToNumbers(text);

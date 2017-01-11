@@ -16,7 +16,7 @@ var spawn = require("child_process").spawn;
 app.post('/computePython', function(request, response){
 
   var data = request.body['data[]'];
-  console.log(data);
+  //console.log(data);
 
   var process = spawn('python',["add data.py",data]); //Lance le program python avec data en paramètre
 
