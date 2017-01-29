@@ -62,7 +62,8 @@ function exampleSetup(){
   var dropzone = select('#example');
   dropzone.drop(function(data){
     var string = JSON.stringify(data.data); //data to String
-    var splitSlice = split(string,",")[1].slice(0,-1);  //no 'base64,' and ' " ' at the end
+    console.log(data,string);
+    var splitSlice = split(string, ",")[1].slice(0,-1);  //no 'base64,' and ' " ' at the end
     var decode = atob(splitSlice);  //base64 to String
 
     loadExampleText(decode);

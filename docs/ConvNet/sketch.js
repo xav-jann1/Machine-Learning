@@ -8,18 +8,18 @@ var d = function(c){
     c.createCanvas(280,280);//divW, divH);
 
     c.noStroke();
-    c.background(100);
+    c.background(0);
 
     var buttonClear = c.createButton("clear")//.mousePressed(conv);
     buttonClear.mousePressed(function(){ //Test sur l'image
-      c.background(100);
+      c.background(0);
     });
 
   };
 
   c.mouseDragged = function(){  //Dessin de l'utilisateur
-    c.fill(250);
-    c.ellipse(c.touchX,c.touchY,40,40);
+    c.fill(255);
+    c.ellipse(c.touchX,c.touchY,25,25);
 
   };
 
@@ -35,7 +35,7 @@ var myp5 = new p5(d,'draw');
 
 
 var nd = function(c){
-
+  var answer, scores = [];
   c.setup = function(){
 
     var divW = c.select('#draw').width;
@@ -44,7 +44,7 @@ var nd = function(c){
     c.createCanvas(280,280);//divW, divH);
 
     c.noStroke();
-    c.background(100);
+    c.background(0);
 
 
 
@@ -52,7 +52,7 @@ var nd = function(c){
     button.mousePressed(function(){ //Test sur l'image
 
       var net = new ConvNet();
-      //*
+      /*
       net.addLayer('conv', 5, 5);
       net.addLayer('pool', 2);
       net.addLayer('conv', 2, 3);
@@ -63,14 +63,26 @@ var nd = function(c){
       net.addLayer('relu', 50);
 
       net.addLayer('fc');
-      
+
       //*/
 
-      //sendImage(c.imgToArray(c.pixelImage));
+      sendImage(c.imgToArray(c.pixelImage));
 
-      console.log(net.forward(c.imgToArray(c.pixelImage)));
+      //console.log(net.forward(c.imgToArray(c.pixelImage)));
+      /*console.log(c.imgToArray(c.pixelImage));
+
+      var data = c.imgToArray(c.pixelImage);
+      var json = {img: data};
+      //data = c.split(data, '\n');
+      console.log(json)
+      c.save(JSON.stringify(json), 'ijj', 'json');*/
 
     });
+
+    answer = c.createP('wait');
+    c.createP('scores :');
+    console.log(scores);
+    for(var i=0; i<10; i++) scores.push(c.createP(i+': '));
   };
 
   function sendImage(image){  //Image = Array
@@ -87,6 +99,9 @@ var nd = function(c){
     c.httpPost('/convnet', data, 'json', function(result){
       //Server answer:
       console.log(result);
+      answer.html('answer: ' + result.answer);
+      s = result.scores;
+      for(var i=0; i<10; i++) scores[i].html(i+': '+ s[i]);
 
     }, function(error){ console.log(error); });
 

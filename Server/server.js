@@ -1,5 +1,5 @@
 
-console.log('Server is starting..');
+console.log('Server is starting...');
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -79,18 +79,26 @@ app.post('/neural-network', function(request, response){
 app.post('/convnet', function(request, response){
   var image = request.body['image[]'];
   //console.log(image);
+  var ip = request.connection.remoteAddress;
+  var nav = request.headers['user-agent']
+  var time = new Date().toString();
+  //var time = date
+  console.log(ip);
+  console.log(time);
+  console.log(nav);
 
-  //Lance le program python avec image en paramètre:
-  var process = spawn('python',["ConvNet.py", image/*, layers*/]);
+
+  //Lance le programme python avec image en paramètre:
+  var process = spawn('python',["digit_recognition.py", image/*, layers*/]);
 
   var reply = {};
   //Traite la réponse reçue par le programme python:
   process.stdout.on('data', function (data){
-    console.log('answer:')
     var answer = data.toString();  //hex to ASCII
-    console.log(answer);
     answer = JSON.parse(answer);  //ASCII to Object
-    reply.answer = answer;
+    console.log('answer: ' + answer.answer);
+    console.log();
+    reply = answer;
     response.send(reply); //Envoie la réponse
   });
 
