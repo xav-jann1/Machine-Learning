@@ -1,5 +1,3 @@
-## Machine Learning
-
 ## Plan :
 
 ### Introduction
