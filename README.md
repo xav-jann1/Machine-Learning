@@ -1,37 +1,47 @@
-## Welcome to GitHub Pages
+## Machine Learning
 
-You can use the [editor on GitHub](https://github.com/DeD2aI80/TIPE/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### Plan :
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Introduction
 
-### Markdown
+### I - Présentation des Réseaux de Neurones :
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+1. Structure et fonctionnement
+2. Types d'exemples
+3. Forme d'apprentissage
 
-```markdown
-Syntax highlighted code block
+### II - Outils mathématiques :
 
-# Header 1
-## Header 2
-### Header 3
+1. Fonctionnement avec des matrices
+2. Cost/Loss functions : SVM, Softmax
+3. Gradient
 
-- Bulleted
-- List
+### III - Programme informatique :
 
-1. Numbered
-2. List
+1. Algorithme pour la propagation
+2. Algorithme de la backpropagation
+3. Exemple d'apprentissage 
 
-**Bold** and _Italic_ and `Code` text
+### Conclusion
 
-[Link](url) and ![Image](src)
-```
+---
+### Bibliographie :
+- Cours de Stanford : CS231n Convolutional Neural Networks for Visual Recognition
+(http://cs231n.github.io/ , 
+ https://www.youtube.com/playlist?list=PLLvH2FwAQhnpj1WEB-jHmPuUeQ8mX-XXG)
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+- Neural Networks and Deep Learning
+(http://neuralnetworksanddeeplearning.com/)
 
-### Jekyll Themes
+- Machine Learning Mastery : A Tour of Machine Learning Algorithms
+(http://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/DeD2aI80/TIPE/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- Welch Labs : Neural Networks Demystified
+(https://www.youtube.com/watch?v=bxe2T-V8XRs)
 
-### Support or Contact
+---
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Annexes :
+- Interview ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpU2MwZFNfeHhHVzA))
+
+
