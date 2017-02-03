@@ -15,19 +15,3 @@ np.save('w1',w)
 
 print np.load('w1.npy')
 
-
-"""
-#np.savetxt('w.gz',w)
-f = open('w.gz')
-np.loadtxt(f)
-
-
-fo = open("foo.txt", "w")
-
-print w
-
-fo.write(""+str(w))
-
-print "Read String is : "
-# Close opend file
-fo.close()"""
