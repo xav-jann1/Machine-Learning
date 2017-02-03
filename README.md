@@ -1,6 +1,6 @@
 ## Machine Learning
 
-### Plan :
+## Plan :
 
 ### Introduction
 
@@ -25,7 +25,9 @@
 ### Conclusion
 
 ---
-### Bibliographie :
+
+## Bibliographie :
+
 - Cours de Stanford : CS231n Convolutional Neural Networks for Visual Recognition
 (http://cs231n.github.io/ , 
  https://www.youtube.com/playlist?list=PLLvH2FwAQhnpj1WEB-jHmPuUeQ8mX-XXG)
@@ -41,7 +43,7 @@
 
 ---
 
-### Annexes :
+## Annexes :
 - Interview ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpU2MwZFNfeHhHVzA))
 
 
