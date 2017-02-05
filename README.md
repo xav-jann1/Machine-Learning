@@ -33,18 +33,14 @@
 
 ## Bibliographie :
 
-- Cours de Stanford : CS231n Convolutional Neural Networks for Visual Recognition
-(http://cs231n.github.io/ , 
- https://www.youtube.com/playlist?list=PLLvH2FwAQhnpj1WEB-jHmPuUeQ8mX-XXG)
+- [Cours de Stanford](http://cs231n.github.io/) : CS231n Convolutional Neural Networks for Visual Recognition
+([Cours Vidéos](https://www.youtube.com/playlist?list=PLLvH2FwAQhnpj1WEB-jHmPuUeQ8mX-XXG))
 
-- Neural Networks and Deep Learning
-(http://neuralnetworksanddeeplearning.com/)
+- [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 
-- Machine Learning Mastery : A Tour of Machine Learning Algorithms
-(http://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/)
+- Machine Learning Mastery : [A Tour of Machine Learning Algorithms](http://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/)
 
-- Welch Labs : Neural Networks Demystified
-(https://www.youtube.com/watch?v=bxe2T-V8XRs)
+- Welch Labs : [Neural Networks Demystified](https://www.youtube.com/watch?v=bxe2T-V8XRs)
 
 ---
 
