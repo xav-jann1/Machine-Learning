@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var server = app.listen(80);
 
-app.use(express.static('../docs'));
+app.use(express.static('..'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
