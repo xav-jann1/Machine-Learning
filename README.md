@@ -15,17 +15,11 @@
 2. Types d'exemples
 3. Forme d'apprentissage
 
-### II - Outils mathématiques :
+### II - L'Apprentissage :
 
-1. Fonctionnement avec des matrices
-2. Cost/Loss functions : SVM, Softmax
-3. Gradient
-
-### III - Programme informatique :
-
-1. Algorithme pour la propagation
-2. Algorithme de la backpropagation
-3. Exemple d'apprentissage 
+1. Calculer l'erreur : la fonction Cost/Loss
+2. Le Gradient
+3. Modification des poids
 
 ### Conclusion
 
@@ -46,5 +40,9 @@
 
 ## Annexes :
 - Interview ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpU2MwZFNfeHhHVzA))
+- Formulaire ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpWG5tRUFLdGd0U2c))
+- Calcul du Gradient ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpM2FuOER0SFI3eGc))
+- Gradient des poids d'un neurone ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpN1RreS1jaVh6S2s))
+- Algorithmes des Réseaux de Neurones ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpM2JVYTdnRWlpcE0))
 
 
