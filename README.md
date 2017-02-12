@@ -39,10 +39,15 @@
 ---
 
 ## Annexes :
+
 - Interview ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpU2MwZFNfeHhHVzA))
+
 - Formulaire ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpWG5tRUFLdGd0U2c))
+
 - Calcul du Gradient ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpM2FuOER0SFI3eGc))
+
 - Gradient des poids d'un neurone ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpN1RreS1jaVh6S2s))
+
 - Algorithmes des Réseaux de Neurones ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpM2JVYTdnRWlpcE0))
 
 
