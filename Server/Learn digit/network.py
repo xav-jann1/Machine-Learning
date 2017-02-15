@@ -73,8 +73,9 @@ class Network(object):
             if test_data:
                 accuracy = self.evaluate(test_data)
                 f.write(str(accuracy)+'\n')
-                print("Epoch {0}: {1} / {2}".format(
-                    j, accuracy, n_test))
+                if j % 10 == 0 or j==epochs-1:
+                    print("Epoch {0}: {1} / {2}".format(
+                        j, accuracy, n_test))
             else:
                 print("Epoch {0} complete".format(j))
         f.close()

@@ -43,7 +43,7 @@ activationPrime = { 'id': np.vectorize(identityPrime),
                     'tanh': np.vectorize(tanhPrime)
                   }
 
-        
+
 learning_rate = 1e-0
 reg = 1e-3
 
@@ -55,13 +55,13 @@ class Network:
         self.num_layers = len(layers)
         self.layers = layers
         self.biases = [0.01*np.random.randn(1, y) for y in layers[1:]]
-        self.weights = [0.0*np.random.randn(x, y) for x, y in zip(layers[:-1], layers[1:])]
+        self.weights = [0.01*np.random.randn(x, y) for x, y in zip(layers[:-1], layers[1:])]
 
         self.f = activation[f]
         self.fPrime = activationPrime[f]
 
         self.trainSet = trainSet
-        
+
         self.hidden = []
 
 
@@ -71,52 +71,52 @@ class Network:
         for w,b in zip(self.weights, self.biases):
             Y = Y.dot(w) + b
             Y = self.f(Y)
-            self.hidden.append(Y)            
+            self.hidden.append(Y)
 
         return Y
-    
-        
+
+
     def train_step(self):
         batch = np.array(self.trainSet[0])  #Récupère les entrées des exemples
         answers = self.trainSet[1]  #Récupère la position de la bonne sortie des exemples
-    
+
         scores = self.forward(batch)  #Sorties obtenues sur les exemples testés
-        exp_scores = np.exp(scores)        
-        
+        exp_scores = np.exp(scores)
+
         probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
         correct_logprobs = -np.log(probs[range(len(answers)),answers])
-        
+
         data_loss = np.sum(correct_logprobs) / len(answers)
         #print(scores,probs, data_loss)
         reg_loss = 0.5 * reg * np.sum([np.sum(w*w) for w in self.weights])  #Somme de tous les poids
-        
+
         loss = data_loss + reg_loss
-        
+
         dscores = probs
         dscores[range(len(answers)),answers] -= 1
         dscores /= len(answers)
-        
+
         dW, dB = [], []
         dh = dscores
         #dh = self.fPrime(dh)
-        for w,h in zip(reversed(self.weights),reversed(self.hidden[:-1])):  
+        for w,h in zip(reversed(self.weights),reversed(self.hidden[:-1])):
             dW.insert(0, np.dot(h.T,dh))
             dB.insert(0, np.sum(dh, axis=0, keepdims=True))
-            
+
             dh = np.dot(dh,w.T)
             dh = self.fPrime(dh)
-        
+
         for w, dw, b, db in zip(self.weights, dW, self.biases, dB):
             w -= learning_rate * (dw + reg * w)
             b -= learning_rate * (db + reg * b)
-        
+
         """
         print(dW,'\n', dB)
         print()
         """
         return loss
-        
-        
+
+
         """ # SVM
     def train_step(self, minibatch = False):
 
@@ -132,7 +132,7 @@ class Network:
             margins.append(np.sum(m))
 
         data_loss = np.sum(margins) #/ !! len(margins) !!
-        
+
         reg_loss = 0
         #reg_loss = np.sum(np.absolute(self.weights))
         #reg_loss = np.sum(self.weights**2)
@@ -141,12 +141,12 @@ class Network:
 
         print(loss)
 
-    
+
         #dmargins
         #dscores
         #dW
 
-        
+
         dscores
 
         self.weights -= dW * learning_rate
@@ -227,8 +227,8 @@ for i in range(1000):
     if i%100==1:
         print(l)
 
-       
-        
+
+
 
 print(n.accuracy())
 

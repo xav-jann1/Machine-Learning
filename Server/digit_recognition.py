@@ -25,9 +25,10 @@ def JSONstringify(dico):
     return t
 
 #Network loading :
-n = network.Network([784, 30, 10])
-n.weights = np.load('data/weights.npy')
-n.biases = np.load('data/biases.npy')
+neurons = 100
+n = network.Network([784, neurons, 10])
+n.weights = np.load('data/' + str(neurons) + 'n - weights.npy')
+n.biases  = np.load('data/' + str(neurons) + 'n - biases.npy')
 
 #Get image and transform into an array :
 a = sys.argv[1]  #Get 1st parameter
