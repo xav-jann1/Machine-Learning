@@ -1,7 +1,7 @@
 ## Applications :
 
-- [Construction d'un Réseau de Neurones](Neural%20Network/index.html)
-- [Reconnaissance de chiffres](ConvNet/index.html)
+- [Construction d'un Réseau de Neurones](Neural%20Network/index.html) ([Code Source](https://github.com/DeD2aI80/Machine-Learning/tree/master/Neural%20Network))
+- [Reconnaissance de chiffres](ConvNet/index.html) ([Code Source](https://github.com/DeD2aI80/Machine-Learning/tree/master/ConvNet))
 
 ---
 
@@ -33,6 +33,8 @@
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 
 - Machine Learning Mastery : [A Tour of Machine Learning Algorithms](http://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/)
+
+- Sciences étonnantes : [Le Deep Learning](https://www.youtube.com/watch?v=trWrEWfhTVg)
 
 - Welch Labs : [Neural Networks Demystified](https://www.youtube.com/watch?v=bxe2T-V8XRs)
 
