@@ -8,6 +8,7 @@ Created on Sun Jan 15 11:22:29 2017
 import numpy as np
 import matplotlib.pyplot as plt
 
+np.random.seed(100)
 
 N = 100 # number of points per class
 D = 2 # dimensionality
@@ -42,6 +43,7 @@ for i in range(200):
   # evaluate class scores, [N x K]
   scores = np.dot(X, W) + b 
   
+
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
@@ -59,6 +61,8 @@ for i in range(200):
   dscores[range(num_examples),y] -= 1
   dscores /= num_examples
   
+  #print dscores
+  
   # backpropate the gradient to the parameters (W,b)
   dW = np.dot(X.T, dscores)
   db = np.sum(dscores, axis=0, keepdims=True)
@@ -68,3 +72,4 @@ for i in range(200):
   # perform a parameter update
   W += -step_size * dW
   b += -step_size * db
+  

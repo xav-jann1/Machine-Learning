@@ -7,9 +7,9 @@ Created on Sat Jan 28 21:04:21 2017
 
 import numpy as np
 import matplotlib.pyplot as plt
-from random import randrange, shuffle
 
-"""
+np.random.seed(100)
+
 N = 100 # number of points per class
 D = 2 # dimensionality
 K = 3 # number of classes
@@ -23,8 +23,8 @@ for j in range(K):
   y[ix] = j
 # lets visualize the data:
 plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
-"""
 
+"""
 N = 8
 D = 1
 K = 2
@@ -44,9 +44,7 @@ for n in X:
         
 X = np.array(X)
 y = np.array(y)
-
-
-
+"""
 
 # initialize parameters randomly
 h = 100 # size of hidden layer
@@ -55,18 +53,19 @@ b = np.zeros((1,h))
 W2 = 0.01 * np.random.randn(h,K)
 b2 = np.zeros((1,K))
 
+
 # some hyperparameters
-step_size = 1e6
+step_size = 1e-0
 reg = 1e-3 # regularization strength
 
 # gradient descent loop
 num_examples = X.shape[0]
-for i in range(10000):
+for i in xrange(10000):
   
   # evaluate class scores, [N x K]
   hidden_layer = np.maximum(0, np.dot(X, W) + b) # note, ReLU activation
   scores = np.dot(hidden_layer, W2) + b2
-  
+
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
@@ -76,9 +75,9 @@ for i in range(10000):
   data_loss = np.sum(corect_logprobs)/num_examples
   reg_loss = 0.5*reg*np.sum(W*W) + 0.5*reg*np.sum(W2*W2)
   loss = data_loss + reg_loss
-  if i % 10 == 0:
-    print("iteration %d: loss %f" % (i, loss))
-  
+  if i % 1000 == 0:
+    print "iteration %d: loss %f" % (i, loss)
+    
   # compute the gradient on scores
   dscores = probs
   dscores[range(num_examples),y] -= 1
@@ -92,6 +91,9 @@ for i in range(10000):
   dhidden = np.dot(dscores, W2.T)
   # backprop the ReLU non-linearity
   dhidden[hidden_layer <= 0] = 0
+
+
+
   # finally into W,b
   dW = np.dot(X.T, dhidden)
   db = np.sum(dhidden, axis=0, keepdims=True)

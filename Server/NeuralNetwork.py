@@ -7,18 +7,19 @@ Created on Fri Jan 13 14:48:14 2017
 
 import numpy as np
 from math import exp
+#from random import randrange, shuffle
 
 
 def identity(x):
     return x
 def identityPrime(x):
-    return 1
+    return 1.
 
 def relu(x):
-    return max(0,x)
+    return max(0.,x)
 def reluPrime(x):
-    if x>0: return 1
-    return 0
+    if x<=0: return 0.
+    return 1.
 
 def sigmoid(x):
     return 1/(1+exp(-x))
@@ -28,7 +29,7 @@ def sigmoidPrime(x):
 def tanh(x):
     return (exp(x)-exp(-x)) / (exp(x)+exp(-x))
 def tanhPrime(x):
-    return pow(2/(exp(x)+exp(-x)), 2)
+    return pow(2./(exp(x)+exp(-x)), 2)
 
 
 activation = { 'id': np.vectorize(identity),
@@ -44,21 +45,23 @@ activationPrime = { 'id': np.vectorize(identityPrime),
                   }
 
 
-learning_rate = 1e-0
+learning_rate = 1e0
 reg = 1e-3
 
 #np.random.seed(100)
 
 class Network:
 
-    def __init__(self, layers, f, trainSet = []):
+    def __init__(self, layers, activs, trainSet = []):
         self.num_layers = len(layers)
         self.layers = layers
-        self.biases = [0.01*np.random.randn(1, y) for y in layers[1:]]
+        
+        #self.biases = [0.01*np.random.randn(1, y) for y in layers[1:]]
         self.weights = [0.01*np.random.randn(x, y) for x, y in zip(layers[:-1], layers[1:])]
-
-        self.f = activation[f]
-        self.fPrime = activationPrime[f]
+        self.biases = [np.zeros((1,y)) for y in layers[1:]]
+                       
+        self.f = [activation[f] for f in activs]
+        self.fPrime = [activationPrime[f] for f in activs]
 
         self.trainSet = trainSet
 
@@ -68,9 +71,9 @@ class Network:
     def forward(self, X):
         Y = X
         self.hidden = [X]
-        for w,b in zip(self.weights, self.biases):
+        for w,b,f in zip(self.weights, self.biases, self.f):
             Y = Y.dot(w) + b
-            Y = self.f(Y)
+            Y = f(Y)
             self.hidden.append(Y)
 
         return Y
@@ -95,25 +98,26 @@ class Network:
         dscores = probs
         dscores[range(len(answers)),answers] -= 1
         dscores /= len(answers)
-
+        
         dW, dB = [], []
         dh = dscores
-        #dh = self.fPrime(dh)
-        for w,h in zip(reversed(self.weights),reversed(self.hidden[:-1])):
-            dW.insert(0, np.dot(h.T,dh))
+        
+        for i in reversed(range(len(self.layers)-1)):
+            dh = dh * self.fPrime[i](self.hidden[i+1])
+            
+            dW.insert(0, np.dot(self.hidden[i].T, dh))
             dB.insert(0, np.sum(dh, axis=0, keepdims=True))
-
-            dh = np.dot(dh,w.T)
-            dh = self.fPrime(dh)
+            
+            if i>0:
+                dh = np.dot(dh,self.weights[i].T)
+        
 
         for w, dw, b, db in zip(self.weights, dW, self.biases, dB):
             w -= learning_rate * (dw + reg * w)
             b -= learning_rate * (db + reg * b)
-
-        """
-        print(dW,'\n', dB)
-        print()
-        """
+        
+    
+        
         return loss
 
 
@@ -159,35 +163,37 @@ class Network:
 
         answers = self.forward(examples)
 
-        correct = 0;
+        correct = 0.;
         total = len(answers)
         for i in range(total):
             a = np.argmax(answers[i])   #Récupère la position de la valeur maximale
             if a == correct_answers[i]:
-                correct += 1
+                correct += 1.
 
         return correct/total
 
 
-
-
+"""
 X = np.array([ [0,0,1],[0,1,1], [1,0,1], [0,0,1] ])
-
 W = [np.full((3,4), 0.5), np.full((4,4), 0.2)]
+"""
 
-l = [2,100,3]
+"""
+X = []
+for i in range(100):
+    X.append([randrange(0,100,2)])    #Pair
+    X.append([randrange(1,100,2)])    #Impair
+shuffle(X)
 
-trainSet = np.array([[[0,0,0,0],0],
-                     [[0,0,0,1],1],
-                     [[0,0,1,0],0],
-                     [[0,0,1,1],1],
-                     [[0,1,0,0],0],
-                     [[0,1,0,1],1],
-                     [[0,1,1,0],0],
-                     [[0,1,1,1],1],
-                     [[1,0,0,0],0],
-                     [[1,0,0,1],1]])
+y = []
+for n in X:
+    if n[0]%2 == 0:
+        y.append(0)
+    else:
+        y.append(1)
+"""
 
+#np.random.seed(100)
 
 N = 100 # number of points per class
 D = 2 # dimensionality
@@ -201,32 +207,18 @@ for j in range(K):
   X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
   y[ix] = j
 
+
 train = [X,y]
 
+l = [2,100,3]
 
-t = np.array([item[0] for item in trainSet])
-
-n = Network(l,'relu', train)
-"""
-print(n.forward(t))
-n.train_step()
-n.train_step()
-n.train_step()
-n.train_step()
-n.train_step()
-print(n.forward(t))
-
-print(n.accuracy())
-
-"""
+n = Network(l,['relu','id'], train)
 
 
-for i in range(1000):
+for i in range(10000):
     l = n.train_step()
-    #print(n.accuracy())
-    if i%100==1:
-        print(l)
-
+    if i%1000==0:
+        print(i,l,n.accuracy())
 
 
 
