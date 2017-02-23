@@ -5,12 +5,12 @@ var d = function(c){
     var divW = c.select('#draw').width;
     var divH = c.select('#draw').height;
 
-    c.createCanvas(280,280);//divW, divH);
+    c.createCanvas(420,420);//divW, divH);
 
     c.noStroke();
     c.background(0);
 
-    var buttonClear = c.createButton("clear")//.mousePressed(conv);
+    var buttonClear = c.select('#button-clear')//.mousePressed(conv);
     buttonClear.mousePressed(function(){ //Test sur l'image
       c.background(0);
     });
@@ -19,12 +19,14 @@ var d = function(c){
 
   c.mouseDragged = function(){  //Dessin de l'utilisateur
     c.fill(255);
-    c.ellipse(c.touchX,c.touchY,25,25);
+    c.ellipse(c.touchX,c.touchY,30,30);
 
   };
 
   c.mouseReleased = function(){
-    p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé
+    if(c.mouseX>-20 && c.mouseX<c.width+20){
+      p5nd.img(c.get());  //Déclenche l'affichage de l'image pixelisé
+    };
   };
 
 
@@ -46,12 +48,37 @@ var nd = function(c){
     c.noStroke();
     c.background(0);
 
+    trueAnswer = c.select('#button-true');
+    trueAnswer.mousePressed(function(){
+      showToast('Bien sûr que j\'ai raison !');
+    });
 
+    falseAnswer = c.select('#button-false');
+    falseAnswer.mousePressed(function(){
+      var answer = c.int(c.select('#answer').html());
+      var realAnswer = c.int(prompt('Quel était le bon chiffre ?'));
 
-    var button = c.createButton("send")//.mousePressed(conv);
-    button.mousePressed(function(){ //Test sur l'image
+      if(answer == realAnswer || realAnswer===undefined){
+        showToast('You lie to me !');
+      }else{
+        var data = {
+          image: c.pixelImage,
+          answer: realAnswer
+        }
+        console.log('Sending data...');
+        console.log(data);
 
-      var net = new ConvNet();
+        c.httpPost('/saveImage', data, 'json', function(result){  // TODO: Afficher aléatoirement une phrase d'excuse ("J'hésitais entre ces deux nombres", ...)
+          console.log(result);
+          showToast('Merci, cette erreur ne se reproduira plus !');
+        }, function(error){ console.log(error); });
+      }
+    });
+
+  //  var button = c.select('#button-send')//.mousePressed(conv);
+  //  button.mousePressed(function(){ //Test sur l'image
+
+  //    var net = new ConvNet();
       /*
       net.addLayer('conv', 5, 5);
       net.addLayer('pool', 2);
@@ -66,7 +93,7 @@ var nd = function(c){
 
       //*/
 
-      var image = c.pixelImage;
+  /*    var image = c.pixelImage;
       //console.log(c.pixelImage);
 
       for(var i=0; i<image.length; i++){
@@ -84,12 +111,9 @@ var nd = function(c){
       console.log(json)
       c.save(JSON.stringify(json), 'ijj', 'json');*/
 
-    });
+  //  });
 
-    answer = c.createP('wait');
-    c.createP('scores :');
-    console.log(scores);
-    for(var i=0; i<10; i++) scores.push(c.createP(i+': '));
+
   };
 
   function sendImage(image){  //Image = Array
@@ -97,36 +121,31 @@ var nd = function(c){
 
     var data = {
       image: image
-
-      //layers:
-
     }
     console.log(data);
 
-    c.httpPost('/convnet', data, 'json', function(result){
+    c.httpPost('/digit_recognition', data, 'json', function(result){
       //Server answer:
       console.log(result);
-      answer.html('answer: ' + result.answer);
-      s = result.scores;
-      for(var i=0; i<10; i++) scores[i].html(i+': '+ s[i]);
-
+      c.select('#answer').html(result.answer);
     }, function(error){ console.log(error); });
-
   }
 
 
-  c.pixelImage;
+  c.pixelImage = [];
 
   c.img = function(image){
     var pixel = c.norm(image);  //Récupère l'image pixelisée
 
     pixel = c.centerImage(pixel);
 
-    var l = image.width/28;  //Dimension d'un pixel
+    var l = 280/28;  //Dimension d'un pixel
     c.showImage(pixel, l);  //Affichage de l'image dans le canvas
 
     c.pixelImage = pixel; //Enregistre l'image
     //console.log(pixel);
+
+    sendImage(pixel);
 
   };
 
@@ -155,7 +174,7 @@ var nd = function(c){
       }
     }
     grey /= nPixel*nPixel;
-    return grey;
+    return c.int(grey);
   };
 
 
@@ -185,7 +204,7 @@ var nd = function(c){
     var dy = cy - d[0];   //Mouvement y pour centrer l'image
     image = c.moveY(image, dy);
 
-    console.log(lx, ly, dx,dy);
+    //console.log(lx, ly, dx,dy);
 
     return image;
   };
@@ -283,9 +302,18 @@ var nd = function(c){
     }
     d.push(x);
 
-    console.log(d);
+    //console.log(d);
     return d;
   };
 
 };
 var p5nd = new p5(nd,'norm-draw');
+
+
+function showToast(text){
+  //Toast:
+  var notification = document.querySelector('.mdl-js-snackbar');
+  notification.MaterialSnackbar.showSnackbar({
+    message: text
+  });
+}

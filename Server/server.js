@@ -11,7 +11,6 @@ app.use(express.static('..'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-
 var spawn = require("child_process").spawn;
 app.post('/computePython', function(request, response){
 
@@ -75,18 +74,16 @@ app.post('/neural-network', function(request, response){
 });
 
 
-// Convolutional Neural Network answer :
-app.post('/convnet', function(request, response){
+// Digit Recognition answer :
+app.post('/digit_recognition', function(request, response){
   var image = request.body['image[]'];
   //console.log(image);
   var ip = request.connection.remoteAddress;
   var nav = request.headers['user-agent']
   var time = new Date().toString();
-  //var time = date
   console.log(ip);
   console.log(time);
   console.log(nav);
-
 
   //Lance le programme python avec image en paramètre:
   var process = spawn('python',["digit_recognition.py", image/*, layers*/]);
@@ -102,11 +99,34 @@ app.post('/convnet', function(request, response){
     response.send(reply); //Envoie la réponse
   });
 
-/*
-  var reply = {
-    image: image,
-    newImage: newImage
-  };
-*/
+});
 
+
+var fs = require('fs');
+var file = fs.readFileSync('../Digit Recognition/wrong answers.json');
+var wrongAnswers = JSON.parse(file);
+
+app.post('/saveImage', function(request, response){
+  var image = request.body['image[]'];
+  var answer = request.body.answer;
+  var ip = request.connection.remoteAddress;
+  var time = new Date().toString();
+
+  var data = {
+    image: image,
+    ip: ip,
+    time: time
+  }
+
+  wrongAnswers['digit'][answer].push(data);
+  wrongAnswers['0_summary'][answer]++;  //Compte le nombre d'exemple pour chaque chiffre
+  var text = JSON.stringify(wrongAnswers);
+  fs.writeFile('../Digit Recognition/wrong answers.json', text, function(error){
+    //console.log(error);
+  });
+
+  var reply = {
+    answer: 'Image and answer saved !'
+  };
+  response.send(reply);
 });

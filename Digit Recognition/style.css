@@ -1,0 +1,35 @@
+html *
+{
+  font-family: roboto;
+}
+
+.mdl-grid {
+  max-width: 800px;
+}
+
+.card-title {
+  font-family: roboto;
+  font-weight: 500;
+  font-size: 15px;
+  color: #999;
+  margin-left: 7px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.button{
+  margin-top:1px;
+  margin-bottom:10px;
+  margin-left:10px;
+  color:#FFF
+}
+
+#answer {
+  font-family: roboto;
+  font-size: 30pt;
+  color: #333;
+
+  margin-top: 15px;
+  margin-left: 28px;
+  margin-bottom:18px
+}
