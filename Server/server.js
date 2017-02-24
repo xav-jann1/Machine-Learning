@@ -112,6 +112,9 @@ app.post('/saveImage', function(request, response){
   var ip = request.connection.remoteAddress;
   var time = new Date().toString();
 
+  //String to int
+  for(var i=0; i<image.length; i++) image[i] = Number(image[i]);  // "0" -> 0
+
   var data = {
     image: image,
     ip: ip,
@@ -124,6 +127,8 @@ app.post('/saveImage', function(request, response){
   fs.writeFile('../Digit Recognition/wrong answers.json', text, function(error){
     //console.log(error);
   });
+
+  console.log('New image saved !\n' + ip + '\n' + time + '\n');
 
   var reply = {
     answer: 'Image and answer saved !'
