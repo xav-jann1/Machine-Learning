@@ -24,6 +24,8 @@ def JSONstringify(dico):
 
     return t
 
+    
+""" Sigmoide
 #Network loading :
 neurons = 100
 n = network.Network([784, neurons, 10])
@@ -40,6 +42,29 @@ a = np.array(a) / 255
 #Forward :
 scores = n.feedforward(a)
 scores = [i[0] for i in scores]
+"""
+
+####### ReLU 
+weights = np.load('data/' + 'W - 0.9778.npy')
+biases  = np.load('data/' + 'b - 0.9778.npy')
+
+W = weights[0]
+W2 = weights[1]
+b = biases[0]
+b2 = biases[1]
+
+#Get image and transform into an array :
+a = sys.argv[1]  #Get 1st parameter
+a = stringToArray(a)  #Create the array from the text
+
+a = [[float(i)] for i in a]
+X = np.array(a) / 255
+
+hidden_layer = np.maximum(0, np.dot(X.T, W) + b) # note, ReLU activation
+scores = np.dot(hidden_layer[0], W2) + b2
+scores = [i for i in scores]
+#######
+
 
 answer = {}
 answer['answer'] = np.argmax(scores)

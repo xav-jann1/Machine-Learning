@@ -77,16 +77,24 @@
                                 <div class="card-text">Fonction d'activation&#160;:</div>
                                 <select id="select-activation" class="select-box">
                                     <option value="id">Identité</option>
+                                    <option value="relu">ReLU</option>
                                     <option value="sigmoid">Sigmoid</option>
-                                    <option value="softmax">Softmax</option>
                                     <option value="tanh">tanh</option>
                                 </select>
 
-                                <div class="card-text">Méthode d'apprentissage&#160;:</div>
+
+                                <div id="neural-learning-rate" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input  id="neural-learning-rate-value" class="mdl-textfield__input" value="1e0" align="top" type="text" pattern="-?[0-9]*((\.|e|-)(-|[0-9])+)?">
+                                    <label class="mdl-textfield__label">Learning Rate</label>
+                                    <span class="mdl-textfield__error">Input is not a number!</span>
+                                </div>
+
+
+                                <!--div class="card-text">Méthode d'apprentissage&#160;:</div>
                                 <select id="select-learning" class="select-box">
                                     <option value="gradient">Gradient Descent</option>
                                     <option value="evolution">Evolution</option>
-                                </select>
+                                </select-->
 
                                 <label id="checkbox-bias"class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
                                     <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" unchecked>

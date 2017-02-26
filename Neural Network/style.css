@@ -73,9 +73,16 @@ html *
   max-width: 150px;
 }
 
+#neural-learning-rate{
+  margin-top: 0px;
+  padding-right: 100px;
+  padding-left:15px
+
+}
+
 #checkbox-bias{
   margin: 5px 5px;
-
+  margin-top: 0px
 }
 
 /*
