@@ -28,29 +28,36 @@ function setup() {
       images.push(data[key]);
     }
 
-    console.log(images);
+    if(index >= images.length) index = images.length-1;
+    update(images[index]);
+
   }, function(error){ console.log(error); });
 
-  var bNext = createButton('Next');
-  bNext.mousePressed(function(){
-    index++; if(index>=images.length) index = 0;
-    update(images[index]);
-  });
 
   var bBack = createButton('Back');
   bBack.mousePressed(function(){
     index--; if(index<0) index = images.length-1;
     update(images[index]);
   });
+  
+  var bNext = createButton('Next');
+  bNext.mousePressed(function(){
+    index++; if(index>=images.length) index = 0;
+    update(images[index]);
+  });
 
-  textDigit = createP('test');
-  number = createP('test');
+
+
+  textDigit = createP('digit:');
+  number = createP('index:');
+
+
 
 }
 
-function update(image,i){
-  textDigit.html(image.digit);
-  number.html(index);
+function update(image){
+  textDigit.html('digit: ' + image.digit);
+  number.html('index: ' + index + ' / ' + (images.length-1));
   drawImage(image.image);
 }
 
@@ -66,10 +73,6 @@ function drawImage(array){
       for(var j=0; j<n; j++) image.push(0);
     }
   }
-
-  //if(image.length==783) image.push(0);
-
-  console.log(image);
 
   //Display image:
   for(var y=0; y<28; y++){
