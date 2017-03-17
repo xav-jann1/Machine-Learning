@@ -53,7 +53,7 @@ app.post('/saveImage', function(request, response){
   var ip = request.connection.remoteAddress;
   var time = new Date().toString();
 
-  // Compression de l'image: ([21,0,0,0,0,64] -> [21,'0',64])
+  // Compression de l'image: ([21,0,0,0,0,64] -> [21,'4',64])
   var newImage = [], i=0; //Compte les zéros
   while(i<image.length){
     n = 0; while(image[i]=='0' && i<image.length){i++; n++;}
@@ -69,24 +69,21 @@ app.post('/saveImage', function(request, response){
     time: time
   }
 
-  //Enregiste l'image
+  //Enregistre l'image:
   var ref = database.ref('images');
   ref.push(data, function(error){
-    console.log(error)
+    if(error!=null) console.log(error);
   });
 
-  //Mise à jour du compteur
+  //Mise à jour du compteur:
   ref = database.ref('digits');
   ref.once('value', function(data){
     d = data.val();
     d[answer]++;
     database.ref('digits').set(d);
-  },function(error){
-    console.log(error);
-  })
+  },function(error){ console.log(error); });
 
-
-  console.log('New image saved !\n' + ip + '\n' + time + '\n');
+  console.log('New image saved !\n' + ip + '\n' + time);
 
   var reply = {
     answer: 'Image and answer saved !'

@@ -1,0 +1,34 @@
+
+{
+  "true":[
+    "Je le savais !",
+    "Bien sûr que j'ai raison !",
+    "Je ne fais jamais d'erreur.. ou presque !",
+    "Pas besoin de préciser, je sais que j'ai toujours juste !",
+    "Appuyer encore une fois pour être sûr !",
+    "Pas besoin de me tester: j'ai toujours raison !"
+  ],
+
+  "false":[
+    "Je le savais !",
+    "J'avais hésité avec cette autre valeur..",
+    "C'est pas ma faute si je me trompe : vous n'avez qu'à mieux écrire !",
+    "Fallait mieux écrire !",
+    "C'était illisible !",
+    "La prochaine fois, je ferai mieux !",
+    "Essaye encore..",
+    "C'est la faute de mon créateur !",
+    "Je ferais mieux d'apprendre à faire du café..",
+    "Quelle idée d'avoir fait ça ?",
+    "Je n'ai pas besoin de vous pour savoir si j'ai faux !"
+  ],
+
+  "lie":[
+    "Je le savais que j'avais raison : vous m'avez fait peur !",
+    "Vous croyez que je n'allais pas le remarquer !",
+    "Votre 'Faux' est faux !",
+    "Menteur !",
+    "Attention, je vais le dire à votre maman !",
+    "C'est pas bien de mentir !"
+  ]
+}

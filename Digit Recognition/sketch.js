@@ -38,6 +38,12 @@ var myp5 = new p5(d,'draw');
 
 var nd = function(c){
   var answer, scores = [];
+
+  var responses;
+  c.preload = function(){
+    responses = c.loadJSON('responses.json');
+  }
+
   c.setup = function(){
 
     var divW = c.select('#draw').width;
@@ -50,7 +56,8 @@ var nd = function(c){
 
     trueAnswer = c.select('#button-true');
     trueAnswer.mousePressed(function(){
-      showToast('Bien sûr que j\'ai raison !');
+      var r = Math.floor(Math.random()*responses.true.length);
+      showToast(responses.true[r]);
     });
 
     falseAnswer = c.select('#button-false');
@@ -59,7 +66,8 @@ var nd = function(c){
       var realAnswer = c.int(prompt('Quel était le bon chiffre ?'));
 
       if(answer == realAnswer || realAnswer===undefined){
-        showToast('You lie to me !');
+        var r = Math.floor(Math.random()*responses.lie.length);
+        showToast(responses.lie[r]);
       }else{
         var data = {
           image: c.pixelImage,
@@ -70,7 +78,8 @@ var nd = function(c){
 
         c.httpPost('/saveImage', data, 'json', function(result){  // TODO: Afficher aléatoirement une phrase d'excuse ("J'hésitais entre ces deux nombres", ...)
           console.log(result);
-          showToast('Merci, cette erreur ne se reproduira plus !');
+          var r = Math.floor(Math.random()*responses.false.length);
+          showToast(responses.false[r]);
         }, function(error){ console.log(error); });
       }
     });
