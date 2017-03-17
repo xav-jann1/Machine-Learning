@@ -56,10 +56,12 @@ app.post('/saveImage', function(request, response){
   // Compression de l'image: ([21,0,0,0,0,64] -> [21,'4',64])
   var newImage = [], i=0; //Compte les zéros
   while(i<image.length){
-    n = 0; while(image[i]=='0' && i<image.length){i++; n++;}
-    if(n<=1) newImage.push(Number(image[i]));
-    else newImage.push(String(n));
-    i++;
+    var n = 0;
+    while(image[i]=='0' && i<image.length){i++; n++;}
+
+    if(n==0){ newImage.push(Number(image[i])); i++; } //0 '0'
+    else if(n==1) newImage.push(0);  // 1 '0'
+    else newImage.push(String(n));   // n '0'
   }
 
   var data = {
