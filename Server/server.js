@@ -3,6 +3,7 @@ console.log('Server is starting...');
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var spawn = require("child_process").spawn;
 
 var app = express();
 var server = app.listen(80);
@@ -10,68 +11,6 @@ var server = app.listen(80);
 app.use(express.static('..'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-var spawn = require("child_process").spawn;
-app.post('/computePython', function(request, response){
-
-  var data = request.body['data[]'];
-  //console.log(data);
-
-  var process = spawn('python',["add data.py",data]); //Lance le program python avec data en paramètre
-
-  var sum = 0;
-  var reply = {
-    answer: 'Message send !',
-    sum: sum
-  };
-
-  process.stdout.on('data', function (data){
-    sum = data.toString();
-    console.log(sum);
-    reply.sum = sum;  // TODO: Enlever le saut de ligne
-    response.send(reply); //Envoie la réponse
-  });
-
-});
-
-// Neural Network answer :
-app.post('/neural-network', function(request, response){
-
-  var data = request.body['data[]'];
-  console.log('loading data..');
-
-  //var process = spawn('python',["add data.py",data]); //Lance le program python avec data en paramètre
-  /*
-  var sum = 0;
-  var reply = {
-    answer: 'Message send !',
-    sum: sum
-  };
-
-  process.stdout.on('data', function (data){
-    sum = data.toString();
-    console.log(sum);
-    reply.sum = sum;  // TODO: Enlever le saut de ligne
-    response.send(reply); //Envoie la réponse
-  });*/
-
-  var reply = {
-    /*
-    answer: 'Message send !',
-    sum: 10, */
-
-    iteration: 1,  //Nombre de fois que la boucle s'est éxécuté
-    cost: 10,
-
-    weights: [],  //Tous les poids du réseau
-
-    examplesForward: []  //Réponse pour chaque exemple
-
-  };
-
-  response.send(reply);
-
-});
 
 
 // Digit Recognition answer :
@@ -81,9 +20,7 @@ app.post('/digit_recognition', function(request, response){
   var ip = request.connection.remoteAddress;
   var nav = request.headers['user-agent']
   var time = new Date().toString();
-  console.log(ip);
-  console.log(time);
-  console.log(nav);
+  console.log(ip + '\n' + time + '\n' + nav);
 
   //Lance le programme python avec image en paramètre:
   var process = spawn('python',["digit_recognition.py", image/*, layers*/]);
@@ -93,8 +30,7 @@ app.post('/digit_recognition', function(request, response){
   process.stdout.on('data', function (data){
     var answer = data.toString();  //hex to ASCII
     answer = JSON.parse(answer);  //ASCII to Object
-    console.log('answer: ' + answer.answer);
-    console.log();
+    console.log('answer: ' + answer.answer + '\n');
     reply = answer;
     response.send(reply); //Envoie la réponse
   });
@@ -102,9 +38,14 @@ app.post('/digit_recognition', function(request, response){
 });
 
 
+//Firebase:
 var fs = require('fs');
-var file = fs.readFileSync('../Digit Recognition/wrong answers.json');
-var wrongAnswers = JSON.parse(file);
+var config = JSON.parse(fs.readFileSync('data/config.json'));
+
+var firebase = require('firebase');
+firebase.initializeApp(config);
+
+var database = firebase.database();
 
 app.post('/saveImage', function(request, response){
   var image = request.body['image[]'];
@@ -112,21 +53,37 @@ app.post('/saveImage', function(request, response){
   var ip = request.connection.remoteAddress;
   var time = new Date().toString();
 
-  //String to int
-  for(var i=0; i<image.length; i++) image[i] = Number(image[i]);  // "0" -> 0
+  // Compression de l'image: ([21,0,0,0,0,64] -> [21,'4',64])
+  var newImage = [], i=0; //Compte les zéros
+  while(i<image.length){
+    var n = 0;
+    while(image[i]=='0' && i<image.length){i++; n++;}
+
+    if(n==0){ newImage.push(Number(image[i])); i++; } //0 '0'
+    else if(n==1) newImage.push(0);  // 1 '0'
+    else newImage.push(String(n));   // n '0'
+  }
 
   var data = {
-    image: image,
+    image: newImage,
+    digit: answer,
     ip: ip,
     time: time
   }
 
-  wrongAnswers['digit'][answer].push(data);
-  wrongAnswers['0_summary'][answer]++;  //Compte le nombre d'exemple pour chaque chiffre
-  var text = JSON.stringify(wrongAnswers);
-  fs.writeFile('../Digit Recognition/wrong answers.json', text, function(error){
-    //console.log(error);
+  //Enregistre l'image:
+  var ref = database.ref('images');
+  ref.push(data, function(error){
+    if(error!=null) console.log(error);
   });
+
+  //Mise à jour des compteurs:
+  ref = database.ref('digits');
+  ref.once('value', function(data){
+    d = data.val();
+    d[answer]++; d['sum']++;
+    database.ref('digits').set(d);
+  },function(error){ console.log(error); });
 
   console.log('New image saved !\n' + ip + '\n' + time + '\n');
 
