@@ -45,8 +45,8 @@ scores = [i[0] for i in scores]
 """
 
 ####### ReLU 
-weights = np.load('data/' + 'W - 0.9778.npy')
-biases  = np.load('data/' + 'b - 0.9778.npy')
+weights = np.load('data/npy/' + 'W - 0.9778.npy')
+biases  = np.load('data/npy/' + 'b - 0.9778.npy')
 
 W = weights[0]
 W2 = weights[1]
