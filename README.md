@@ -8,7 +8,7 @@ git clone https://github.com/xav-jann1/Machine-Learning.git depth=10
 ## Applications :
 
 - [Construction d'un Réseau de Neurones (WIP)](Neural%20Network/index.html) ([Code Source](https://github.com/DeD2aI80/Machine-Learning/tree/master/Neural%20Network))
-- [Reconnaissance de chiffres](ConvNet/index.html) ([Code Source](https://github.com/DeD2aI80/Machine-Learning/tree/master/Digit%20Recognition))
+- [Reconnaissance de chiffres](Digit%20Recognition/index.html) ([Code Source](https://github.com/DeD2aI80/Machine-Learning/tree/master/Digit%20Recognition))
 
 ---
 
