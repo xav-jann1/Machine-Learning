@@ -49,14 +49,12 @@ git clone https://github.com/xav-jann1/Machine-Learning.git depth=10
 
 ## Annexes :
 
-- Interview ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpU2MwZFNfeHhHVzA))
+- [Interview](./Annexes/Annexe%205%20-%20Interview.pdf)
 
-- Formulaire ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpWG5tRUFLdGd0U2c))
+- [Formulaire](./Annexes/Annexe%201%20-%20Formulaire.pdf)
 
-- Calcul du Gradient ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpM2FuOER0SFI3eGc))
+- [Calcul du Gradient](./Annexes/Annexe%202%20-%20Calcul%20du%20Gradient.pdf)
 
-- Gradient des poids d'un neurone ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpN1RreS1jaVh6S2s))
+- [Gradient des poids d'un neurone](./Annexes/Annexe%203%20-%20Gradient%20d'un%20neurone.pdf)
 
-- Algorithmes des Réseaux de Neurones ([.pdf](https://drive.google.com/open?id=0ByVoBueOuTdpM2JVYTdnRWlpcE0))
-
-
+- [Algorithmes des Réseaux de Neurones](./Annexes/Annexe%204%20-%20Algorithme.pdf)
